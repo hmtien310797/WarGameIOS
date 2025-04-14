@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.Networking;
 using Object = UnityEngine.Object;
 
 public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
@@ -94,7 +95,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
     #endregion
 
     public bool ischecking = false;
-    public delegate void WWWCallback(WWW www);
+    public delegate void WWWCallback(UnityWebRequest www);
     public delegate void StringCallback(string msg);
     public delegate void FloatCallback(float value);
     public delegate void BoolCallback(bool value);
@@ -316,16 +317,16 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         current = 0;
         total = 0;
         StartCoroutine(LoadAssetList(serverPath + version + AssetsUtility.ASSETVERSIONS, VersionAssetCallback));
-        StartCoroutine(LoadAssetList(serverPath + version + AssetsUtility.ASSETPATHTABLE, delegate (WWW www)
+        StartCoroutine(LoadAssetList(serverPath + version + AssetsUtility.ASSETPATHTABLE, delegate (UnityWebRequest www)
         {
             if (www.isDone && www.error == null)
             {
                 AssetsUtility.EasySave(AssetsUtility.GetCachePath(), AssetsUtility.ASSETPATHTABLE, false, delegate (Stream stream, string filename)
                 {
-                    stream.Write(www.bytes, 0, www.bytes.Length);
+                    stream.Write(www.downloadHandler.data, 0, www.downloadHandler.data.Length);
                     return true;
                 });
-                string s = www.text;
+                string s = www.downloadHandler.text;
                 assetTable = OurMiniJSON.Json.Deserialize(s) as Dictionary<string, object>;
             }
         }));
@@ -362,7 +363,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
     /// 比对本地与服务器版本信息
     /// </summary>
     /// <param name="www">从服务器读取的信息</param>
-    private void VersionAssetCallback(WWW www)
+    private void VersionAssetCallback(UnityWebRequest www)
     {
         if (www.isDone && www.error != null)
         {
@@ -374,7 +375,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
             }
             return;
         }
-        string s = www.text;
+        string s = www.downloadHandler.text;
         AssetsUtility.EasySave(AssetsUtility.GetCachePath(), AssetsUtility.SERVERVERSIONS, false, delegate (Stream stream, string filename)
         {
             byte[] b = System.Text.Encoding.UTF8.GetBytes(s);
@@ -530,7 +531,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         }
     }
 
-    private void AssetbundleCallback(WWW www)
+    private void AssetbundleCallback(UnityWebRequest www)
     {
         try
         {
@@ -541,7 +542,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
             string sname = bname.Substring(bname.LastIndexOf("/") + 1);
             if (AssetsUtility.EasySave(path, sname, false, delegate(Stream stream, string filename)
                 {
-                    stream.Write(www.bytes, 0, www.bytes.Length);
+                    stream.Write(www.downloadHandler.data, 0, www.downloadHandler.data.Length);
                     return true;
                 }))
             {
@@ -568,7 +569,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         }
     }
 
-    private void ManifestCallback(WWW www)
+    private void ManifestCallback(UnityWebRequest www)
     {
         string bname = www.url.Replace(serverPath, "");
         bname = bname.Substring(bname.IndexOf(".") + 1);
@@ -576,7 +577,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         string sname = bname.Substring(bname.LastIndexOf("/") + 1);
         AssetsUtility.EasySave(path, sname, false, delegate (Stream stream, string filename)
         {
-            stream.Write(www.bytes, 0, www.bytes.Length);
+            stream.Write(www.downloadHandler.data, 0, www.downloadHandler.data.Length);
             return true;
         });
     }
@@ -819,7 +820,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
 
     IEnumerator LoadAssetBundle(VersionItem versionItem, WWWCallback callback, WWWCallback manifestcallback)
     {
-        WWW www = new WWW(serverPath + versionItem.mName + ".manifest");
+        UnityWebRequest www = new UnityWebRequest(serverPath + versionItem.mName + ".manifest");
         Coroutine c = null;
         yield return www;
         if (www.isDone)
@@ -830,7 +831,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
             }
             www.Dispose();
         }
-        www = new WWW(serverPath + versionItem.mName);
+        www = new UnityWebRequest(serverPath + versionItem.mName);
         //current++;
         if (onBundleLoad != null)
         {
@@ -843,7 +844,7 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         yield return www;
         if (www.isDone)
         {
-            string md5 = AssetsUtility.GetMd5Hash(www.bytes);
+            string md5 = AssetsUtility.GetMd5Hash(www.downloadHandler.data);
             if (!md5.Equals(versionItem.mMd5))
             {
                 if (onBundleLoad != null)
@@ -890,7 +891,9 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
 
     IEnumerator LoadAssetList(string path, WWWCallback callback)
     {
-        WWW www = new WWW(path);
+        UnityWebRequest www = new UnityWebRequest(path);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SendWebRequest();
         yield return www;
         if (www.isDone)
         {
@@ -902,13 +905,13 @@ public class AssetBundleManager : MonoBehaviour, Serclimax.AssetbundleLoader
         www.Dispose();
     }
 
-    IEnumerator ShowProgress(WWW www, float size)
+    IEnumerator ShowProgress(UnityWebRequest www, float size)
     {
         //float step = (float)1 / total;
-        while (www != null && !www.isDone && www.progress <= 1)
+        while (www != null && !www.isDone && www.downloadProgress <= 1)
         {
             //onCheckPercent(step * (current - 1 + www.progress));
-            onCheckPercent((current + size * www.progress) / total);
+            onCheckPercent((current + size * www.downloadProgress) / total);
             yield return new WaitForEndOfFrame();
         }
     }

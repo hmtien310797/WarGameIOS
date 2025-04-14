@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 namespace J3Tech
 {
@@ -39,18 +40,20 @@ namespace J3Tech
 
         private static IEnumerator GetVersionInfo()
         {
-            WWW www = new WWW(VersionUrl);
+            UnityWebRequest www = new UnityWebRequest(VersionUrl);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SendWebRequest();
             yield return www;
             while (!www.isDone)
             {
                 yield return www;
             }
-            if (www.bytesDownloaded <= 0)
+            if (www.downloadedBytes <= 0)
             {
                 yield break;
             }
             
-            byte[] bytes = www.bytes;
+            byte[] bytes = www.downloadHandler.data;
             XmlSerializer s = new XmlSerializer(typeof(VersionInfo));
             VersionInfo version;
             try
