@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<loginserver>
+		<server index="1" ip="" port="7401"/>
+	</loginserver>
+</root>

@@ -1,0 +1,51 @@
+module("FortRule", package.seeall)
+
+local GUIMgr = Global.GGUIMgr
+local TableMgr = Global.GTableMgr
+local TextMgr = Global.GTextMgr
+
+local ui
+
+local isInViewport = false
+
+local function LoadUI()
+	ui = {}
+
+	UIUtil.SetClickCallback(transform:Find("mask").gameObject, function()
+		Global.CloseUI(_M)
+	end)
+
+	UIUtil.SetClickCallback(transform:Find("bg_frane/bg_top/btn_close"):GetComponent("UIButton").gameObject, function()
+		Global.CloseUI(_M)
+	end)
+end
+
+local function SetUI()
+end
+
+local function Draw()
+	LoadUI()
+	SetUI()
+end
+
+function Show()
+	if not isInViewport then
+		Global.OpenUI(_M)
+		return true
+	end
+
+	print("[FortRule.Show] The window is already in viewport.")
+	return false
+end
+
+function Start()
+	isInViewport = true
+
+	Draw()
+end
+
+function Close()
+	isInViewport = false
+
+	ui = nil
+end

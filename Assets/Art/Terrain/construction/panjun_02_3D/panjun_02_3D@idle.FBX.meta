@@ -1,0 +1,224 @@
+fileFormatVersion: 2
+guid: 8a1744289769c05419c3207614b2fc73
+timeCreated: 1504938620
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: Bone002
+    100004: Bone003
+    100006: Bone004
+    100008: panjun_02_3D
+    100010: //RootNode
+    100012: Particle View 001
+    100014: Particle View 001 1
+    100016: Particle View 001 10
+    100018: Particle View 001 11
+    100020: Particle View 001 12
+    100022: Particle View 001 13
+    100024: Particle View 001 14
+    100026: Particle View 001 15
+    100028: Particle View 001 16
+    100030: Particle View 001 17
+    100032: Particle View 001 18
+    100034: Particle View 001 19
+    100036: Particle View 001 2
+    100038: Particle View 001 20
+    100040: Particle View 001 3
+    100042: Particle View 001 4
+    100044: Particle View 001 5
+    100046: Particle View 001 6
+    100048: Particle View 001 7
+    100050: Particle View 001 8
+    100052: Particle View 001 9
+    100054: Particle View 002
+    100056: Particle View 002 1
+    100058: Particle View 002 2
+    400000: Bone001
+    400002: Bone002
+    400004: Bone003
+    400006: Bone004
+    400008: panjun_02_3D
+    400010: //RootNode
+    400012: Particle View 001
+    400014: Particle View 001 1
+    400016: Particle View 001 10
+    400018: Particle View 001 11
+    400020: Particle View 001 12
+    400022: Particle View 001 13
+    400024: Particle View 001 14
+    400026: Particle View 001 15
+    400028: Particle View 001 16
+    400030: Particle View 001 17
+    400032: Particle View 001 18
+    400034: Particle View 001 19
+    400036: Particle View 001 2
+    400038: Particle View 001 20
+    400040: Particle View 001 3
+    400042: Particle View 001 4
+    400044: Particle View 001 5
+    400046: Particle View 001 6
+    400048: Particle View 001 7
+    400050: Particle View 001 8
+    400052: Particle View 001 9
+    400054: Particle View 002
+    400056: Particle View 002 1
+    400058: Particle View 002 2
+    4300000: panjun_02_3D
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: panjun_02_3D
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone001
+        weight: 1
+      - path: Bone001/Bone002
+        weight: 1
+      - path: Bone001/Bone002/Bone003
+        weight: 1
+      - path: Bone001/Bone002/Bone003/Bone004
+        weight: 1
+      - path: panjun_02_3D
+        weight: 1
+      - path: Particle View 001
+        weight: 1
+      - path: Particle View 001 1
+        weight: 1
+      - path: Particle View 001 2
+        weight: 1
+      - path: Particle View 001 3
+        weight: 1
+      - path: Particle View 001 4
+        weight: 1
+      - path: Particle View 001 5
+        weight: 1
+      - path: Particle View 001 6
+        weight: 1
+      - path: Particle View 001 7
+        weight: 1
+      - path: Particle View 001 8
+        weight: 1
+      - path: Particle View 001 9
+        weight: 1
+      - path: Particle View 001 10
+        weight: 1
+      - path: Particle View 001 11
+        weight: 1
+      - path: Particle View 001 12
+        weight: 1
+      - path: Particle View 001 13
+        weight: 1
+      - path: Particle View 001 14
+        weight: 1
+      - path: Particle View 001 15
+        weight: 1
+      - path: Particle View 001 16
+        weight: 1
+      - path: Particle View 001 17
+        weight: 1
+      - path: Particle View 001 18
+        weight: 1
+      - path: Particle View 001 19
+        weight: 1
+      - path: Particle View 001 20
+        weight: 1
+      - path: Particle View 002
+        weight: 1
+      - path: Particle View 002 1
+        weight: 1
+      - path: Particle View 002 2
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 2
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

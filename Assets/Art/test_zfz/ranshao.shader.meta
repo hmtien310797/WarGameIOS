@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9bfb1d2d736904f4bb69235a7683b87a
+timeCreated: 1470207990
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _node_4820: {fileID: 2800000, guid: 991856d13e442a547943060d05f6ad15, type: 3}
+  - _node_9955: {fileID: 2800000, guid: 98bc2017a7aad21419629e57bf0e0d1a, type: 3}
+  - _node_9969: {fileID: 2800000, guid: cb35c878437c08a4b9109fa7ff7f94d8, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

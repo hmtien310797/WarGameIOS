@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: 5fb3c5ad990bbfa4ea14b99934f3713d
+timeCreated: 1506514463
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone002
+    100002: Bone002(mirrored)
+    100004: Bone002(mirrored)001
+    100006: Bone002(mirrored)001(mirrored)
+    100008: Bone003
+    100010: Bone003(mirrored)
+    100012: Bone003(mirrored)001
+    100014: Bone003(mirrored)001(mirrored)
+    100016: Bone003(mirrored)001(mirrored)001
+    100018: Bone003(mirrored)001(mirrored)002
+    100020: Bone003(mirrored)001(mirrored)002(mirrored)
+    100022: Bone003(mirrored)001(mirrored)002(mirrored)001
+    100024: Bone004
+    100026: Root
+    100028: yaosai_01_3D
+    100030: //RootNode
+    100032: Bone001
+    100034: yaosai01_3D
+    100036: Bone005
+    100038: Bone006
+    100040: Line001
+    400000: Bone002
+    400002: Bone002(mirrored)
+    400004: Bone002(mirrored)001
+    400006: Bone002(mirrored)001(mirrored)
+    400008: Bone003
+    400010: Bone003(mirrored)
+    400012: Bone003(mirrored)001
+    400014: Bone003(mirrored)001(mirrored)
+    400016: Bone003(mirrored)001(mirrored)001
+    400018: Bone003(mirrored)001(mirrored)002
+    400020: Bone003(mirrored)001(mirrored)002(mirrored)
+    400022: Bone003(mirrored)001(mirrored)002(mirrored)001
+    400024: Bone004
+    400026: Root
+    400028: yaosai_01_3D
+    400030: //RootNode
+    400032: Bone001
+    400034: yaosai01_3D
+    400036: Bone005
+    400038: Bone006
+    400040: Line001
+    2300000: Line001
+    2300002: Bone001
+    2300004: Bone006
+    3300000: Line001
+    3300002: Bone001
+    3300004: Bone006
+    4300000: yaosai_01_3D
+    4300002: yaosai01_3D
+    4300004: Line001
+    4300006: Bone001
+    4300008: Bone006
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: yaosai_01_3D
+    13700002: yaosai01_3D
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 600
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone001
+        weight: 1
+      - path: Bone001/Bone002
+        weight: 1
+      - path: Bone001/Bone003
+        weight: 1
+      - path: Bone001/Bone004
+        weight: 1
+      - path: Bone001/Bone005
+        weight: 1
+      - path: Bone001/Bone006
+        weight: 1
+      - path: Line001
+        weight: 1
+      - path: yaosai_01_3D
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 2
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

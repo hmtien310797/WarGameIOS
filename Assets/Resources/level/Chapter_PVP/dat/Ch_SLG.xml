@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="" sceneName="Ch_SLG">
+    <LevelElements count="0" />
+    <PathPoints point_count="0" group_count="0" team_count="0" />
+    <Events file="Ch_SLGEvents" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="0,0,0,0" Height="0" EditorWidth="-1" EditorHeight="-1" UID="-1" Mask="0" />
+      <SubSpaces />
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="Ch_Pvp_path" count="0" minCameraX="-9" maxCameraX="33" minCameraZ="24" maxCameraZ="24" minCameraY="13" maxCameraY="25" />
+    <BattleLine />
+    <Slots />
+    <Tracks />
+  </Map>
+</root>

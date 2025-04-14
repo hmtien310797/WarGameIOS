@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 25f67774593c8e7439ef286800fb2a1d
+timeCreated: 1484287520
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: Bone001(mirrored)
+    100004: Bone002
+    100006: Bone002(mirrored)
+    100008: Bone003
+    100010: Bone003(mirrored)
+    100012: Bone004
+    100014: Bone004(mirrored)
+    100016: Bone005
+    100018: Bone005(mirrored)
+    100020: Bone006
+    100022: Bone006(mirrored)
+    100024: Bone007
+    100026: Bone007(mirrored)
+    100028: Bone008
+    100030: Bone009
+    100032: Bone010
+    100034: Bone011
+    100036: Bone012
+    100038: Bone013
+    100040: Circle001
+    100042: Dummy001
+    100044: IK Chain001
+    100046: IK Chain002
+    100048: IK Chain003
+    100050: IK Chain004
+    100052: IK Chain005
+    100054: IK Chain006
+    100056: Line001
+    100058: Object002
+    100060: Object002 1
+    100062: Object028
+    100064: Point001
+    100066: Point002
+    100068: Point003
+    100070: Point004
+    100072: Point005
+    100074: Point006
+    100076: Point007
+    100078: Point008
+    100080: train_01
+    100082: //RootNode
+    100084: Train_01_bone
+    400000: Bone001
+    400002: Bone001(mirrored)
+    400004: Bone002
+    400006: Bone002(mirrored)
+    400008: Bone003
+    400010: Bone003(mirrored)
+    400012: Bone004
+    400014: Bone004(mirrored)
+    400016: Bone005
+    400018: Bone005(mirrored)
+    400020: Bone006
+    400022: Bone006(mirrored)
+    400024: Bone007
+    400026: Bone007(mirrored)
+    400028: Bone008
+    400030: Bone009
+    400032: Bone010
+    400034: Bone011
+    400036: Bone012
+    400038: Bone013
+    400040: Circle001
+    400042: Dummy001
+    400044: IK Chain001
+    400046: IK Chain002
+    400048: IK Chain003
+    400050: IK Chain004
+    400052: IK Chain005
+    400054: IK Chain006
+    400056: Line001
+    400058: Object002
+    400060: Object002 1
+    400062: Object028
+    400064: Point001
+    400066: Point002
+    400068: Point003
+    400070: Point004
+    400072: Point005
+    400074: Point006
+    400076: Point007
+    400078: Point008
+    400080: train_01
+    400082: //RootNode
+    400084: Train_01_bone
+    2300000: Line001
+    3300000: Line001
+    4300000: train_01
+    4300002: Line001
+    7400000: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: train_01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

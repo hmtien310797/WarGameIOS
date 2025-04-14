@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="" sceneName="ChAct_Level_game05">
+    <LevelElements count="14">
+      <Element uniqueId="1" elementType="2" name="Base_us" tableId="30005503" activeWhenInitial="True" position="45,0.1,0.9" rotation="-0.9991446,0,0.04135257" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(45.0, 0.1, 2.3)" height="0" radius="0" direction="0" size="(7.0, 6.3, 3.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(48.4, -0.4, 1.1)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(41.5, -0.4, 1.1)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="2" elementType="2" name="Sandbag5" tableId="30005502" activeWhenInitial="True" position="33.1,0.1,-4.5" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(33.1, 0.2, -4.1)" height="0" radius="0" direction="0" size="(4.0, 1.1, 1.1)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(31.2, 1.1, -4.2)" height="0" radius="0" direction="0" size="(1.0, 2.5, 1.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(35.1, 1.1, -4.2)" height="0" radius="0" direction="0" size="(1.0, 2.5, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="3" elementType="2" name="Sandbag5" tableId="30005502" activeWhenInitial="True" position="33.1,0.1,7.3" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(33.1, 0.2, 7.7)" height="0" radius="0" direction="0" size="(4.0, 1.1, 1.1)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(31.2, 1.1, 7.6)" height="0" radius="0" direction="0" size="(1.0, 2.5, 1.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(35.1, 1.1, 7.6)" height="0" radius="0" direction="0" size="(1.0, 2.5, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="4" elementType="2" name="Sandbag4" tableId="30005501" activeWhenInitial="True" position="30.2,0.1,1.6" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(30.2, 0.1, 1.9)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="5" elementType="2" name="Sandbag4" tableId="30005501" activeWhenInitial="True" position="17.5,0.1,-2.1" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(17.5, 0.1, -1.8)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="6" elementType="2" name="Sandbag4" tableId="30005501" activeWhenInitial="True" position="17.5,0.1,5.1" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(17.5, 0.1, 5.4)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="7" elementType="2" name="Sandbag4" tableId="30005501" activeWhenInitial="True" position="-9.9,0.1,-2" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-9.9, 0.1, -1.7)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="8" elementType="2" name="Sandbag4" tableId="30005501" activeWhenInitial="True" position="-9.9,0.1,4.9" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-9.9, 0.1, 5.2)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="9" elementType="2" name="Camp" tableId="30005508" activeWhenInitial="True" position="25.6,0.1,-3.7" rotation="-0.9640954,0,0.2655562" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(25.6, 0.1, -2.4)" height="0" radius="0" direction="0" size="(3.4, 4.1, 2.7)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="10" elementType="2" name="Camp" tableId="30005508" activeWhenInitial="True" position="25.7,0.1,9" rotation="-0.9698721,0,-0.2436149" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(25.7, 0.1, 10.3)" height="0" radius="0" direction="0" size="(3.4, 4.1, 2.7)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="11" elementType="2" name="Camp" tableId="30005508" activeWhenInitial="True" position="6,0.1,1.7" rotation="-0.9961948,0,0.0871557" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(6.0, 0.1, 3.0)" height="0" radius="0" direction="0" size="(3.4, 4.1, 2.7)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="12" elementType="2" name="MGTower_Stone" tableId="30005505" activeWhenInitial="True" position="-0.6,0.1,-2.6" rotation="-0.9802022,0,0.1979995" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-0.6, 0.1, -1.4)" height="0" radius="0" direction="0" size="(3.8, 2.8, 2.9)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="13" elementType="2" name="MGTower_Stone" tableId="30005505" activeWhenInitial="True" position="-0.9,0.1,7.2" rotation="-0.9755347,0,-0.2198465" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="21" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-0.9, 0.1, 8.4)" height="0" radius="0" direction="0" size="(3.8, 2.8, 2.9)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="14" elementType="2" name="Base_enemy" tableId="30005507" activeWhenInitial="True" position="-36.49,0.1,1.4" rotation="0.993048,0,0.1177108" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="2" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-36.5, 0.1, 2.8)" height="0" radius="0" direction="0" size="(7.0, 6.3, 3.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(-33.1, -0.4, 1.6)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(-40.0, -0.4, 1.6)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+    </LevelElements>
+    <PathPoints point_count="18" group_count="6" team_count="2">
+      <PathPoint uniqueId="1" group="0" position="(19.3, 0.0, -5.0)" team="1" />
+      <PathPoint uniqueId="2" group="0" position="(20.2, 0.0, 0.7)" team="1" />
+      <PathPoint uniqueId="3" group="0" position="(20.2, 0.0, 4.4)" team="1" />
+      <PathPoint uniqueId="4" group="1" position="(-12.5, 0.0, -3.3)" team="1" />
+      <PathPoint uniqueId="5" group="1" position="(-12.9, 0.0, 0.6)" team="1" />
+      <PathPoint uniqueId="6" group="1" position="(-12.1, 0.0, 4.6)" team="1" />
+      <PathPoint uniqueId="7" group="2" position="(-36.6, 0.0, -1.4)" team="1" />
+      <PathPoint uniqueId="8" group="2" position="(-36.4, 0.0, 0.0)" team="1" />
+      <PathPoint uniqueId="9" group="2" position="(-36.8, 0.0, 1.4)" team="1" />
+      <PathPoint uniqueId="10" group="0" position="(-21.4, 0.0, -3.3)" team="2" />
+      <PathPoint uniqueId="11" group="0" position="(-20.1, 0.0, 0.2)" team="2" />
+      <PathPoint uniqueId="12" group="0" position="(-13.1, 0.0, 3.3)" team="2" />
+      <PathPoint uniqueId="13" group="1" position="(20.2, 0.0, -4.7)" team="2" />
+      <PathPoint uniqueId="14" group="1" position="(20.4, 0.0, 0.2)" team="2" />
+      <PathPoint uniqueId="15" group="1" position="(20.5, 0.0, 5.3)" team="2" />
+      <PathPoint uniqueId="16" group="2" position="(38.6, 0.0, -1.5)" team="2" />
+      <PathPoint uniqueId="17" group="2" position="(39.1, 0.0, 0.8)" team="2" />
+      <PathPoint uniqueId="18" group="2" position="(38.6, 0.0, 3.6)" team="2" />
+      <PathGroup group="0" position="(20.2, 0.0, 0.7)" team="1" />
+      <PathGroup group="1" position="(-12.1, 0.0, 0.7)" team="1" />
+      <PathGroup group="2" position="(-34.5, 0.0, 0.0)" team="1" />
+      <PathGroup group="0" position="(-20.1, 0.0, 1.3)" team="2" />
+      <PathGroup group="1" position="(13.6, 0.0, 1.1)" team="2" />
+      <PathGroup group="2" position="(38.6, 0.0, 0.8)" team="2" />
+      <PathTeam team="1" tag="" />
+      <PathTeam team="2" tag="" />
+    </PathPoints>
+    <Events file="ChAct_Level_game05Events" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="4.072708,2.123198,110.000000,40.000000" Height="0" EditorWidth="110" EditorHeight="40" UID="-1" Mask="1025" />
+      <SubSpaces>
+        <Space RootRect="40.547084,-2.490457,0.500000,2.500000" Height="8" UID="1" />
+        <Space RootRect="40.547084,-0.990457,0.500000,0.500000" Height="8" UID="1" />
+        <Space RootRect="41.047084,-2.490457,0.500000,2.500000" Height="8" UID="1" />
+        <Space RootRect="41.047084,-0.990457,0.500000,0.500000" Height="8" UID="1" />
+        <Space RootRect="41.047084,4.259542,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="41.547084,-2.490457,0.500000,2.500000" Height="8" UID="1" />
+        <Space RootRect="41.547084,-0.990457,0.500000,0.500000" Height="8" UID="1" />
+        <Space RootRect="41.547084,4.259542,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="42.047084,-2.490457,0.500000,2.500000" Height="8" UID="1" />
+        <Space RootRect="42.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="42.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="42.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="42.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="42.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="43.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="43.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="43.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="43.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="43.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="43.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="44.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="44.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="44.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="44.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="44.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="44.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="45.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="45.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="45.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="45.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="45.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="45.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="46.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="46.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="46.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="46.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="46.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="46.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="47.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="47.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="47.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="47.547084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="47.547084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="47.547084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="48.047084,-2.740457,0.500000,3.000000" Height="8" UID="1" />
+        <Space RootRect="48.047084,-0.740457,0.500000,1.000000" Height="6.3" UID="1" />
+        <Space RootRect="48.047084,2.759542,0.500000,6.000000" Height="6.3" UID="1" />
+        <Space RootRect="32.874992,-5.419999,0.500000,3.000000" Height="2.5" UID="2" />
+        <Space RootRect="32.874992,-3.169999,0.500000,1.500000" Height="1.05" UID="2" />
+        <Space RootRect="33.374992,-5.419999,0.500000,3.000000" Height="2.5" UID="2" />
+        <Space RootRect="33.374992,-3.169999,0.500000,1.500000" Height="1.05" UID="2" />
+        <Space RootRect="33.874992,-6.419999,0.500000,1.000000" Height="2.5" UID="2" />
+        <Space RootRect="33.874992,-2.669999,0.500000,0.500000" Height="2.5" UID="2" />
+        <Space RootRect="34.374992,-6.419999,0.500000,1.000000" Height="2.5" UID="2" />
+        <Space RootRect="34.374992,-2.669999,0.500000,0.500000" Height="2.5" UID="2" />
+        <Space RootRect="34.874992,-6.419999,0.500000,1.000000" Height="2.5" UID="2" />
+        <Space RootRect="34.874992,-2.669999,0.500000,0.500000" Height="2.5" UID="2" />
+        <Space RootRect="33.124992,7.130001,1.000000,4.500000" Height="2.5" UID="3" />
+        <Space RootRect="33.874992,5.380001,0.500000,1.000000" Height="2.5" UID="3" />
+        <Space RootRect="33.874992,9.130001,0.500000,0.500000" Height="2.5" UID="3" />
+        <Space RootRect="34.374992,5.380001,0.500000,1.000000" Height="2.5" UID="3" />
+        <Space RootRect="34.374992,9.130001,0.500000,0.500000" Height="2.5" UID="3" />
+        <Space RootRect="34.874992,5.380001,0.500000,1.000000" Height="2.5" UID="3" />
+        <Space RootRect="34.874992,9.130001,0.500000,0.500000" Height="2.5" UID="3" />
+        <Space RootRect="30.050001,0.850000,0.500000,2.000000" Height="0.8" UID="4" />
+        <Space RootRect="30.050001,2.350000,0.500000,1.000000" Height="0.8" UID="4" />
+        <Space RootRect="17.350000,-2.349999,0.500000,3.000000" Height="0.8" UID="5" />
+        <Space RootRect="17.350000,4.850000,0.500000,3.000000" Height="0.8" UID="6" />
+        <Space RootRect="-10.050000,-2.499999,0.500000,2.500000" Height="0.8" UID="7" />
+        <Space RootRect="-10.050000,-0.999999,0.500000,0.500000" Height="0.8" UID="7" />
+        <Space RootRect="-10.050000,4.650000,0.500000,3.000000" Height="0.8" UID="8" />
+        <Space RootRect="23.653713,-4.401798,1.000000,1.000000" Height="4.13" UID="9" />
+        <Space RootRect="23.903713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="24.403713,-4.401798,0.500000,1.000000" Height="4.13" UID="9" />
+        <Space RootRect="24.403713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="24.903713,-4.651798,0.500000,1.500000" Height="4.13" UID="9" />
+        <Space RootRect="24.903713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="25.403713,-4.651798,0.500000,1.500000" Height="4.13" UID="9" />
+        <Space RootRect="25.403713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="25.903713,-4.651798,0.500000,1.500000" Height="4.13" UID="9" />
+        <Space RootRect="25.903713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="26.403713,-4.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="26.403713,-2.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="26.903713,-4.901798,0.500000,2.000000" Height="4.13" UID="9" />
+        <Space RootRect="26.903713,-3.151798,0.500000,1.500000" Height="4.13" UID="9" />
+        <Space RootRect="27.403713,-4.401798,0.500000,1.000000" Height="4.13" UID="9" />
+        <Space RootRect="27.403713,-3.151798,0.500000,1.500000" Height="4.13" UID="9" />
+        <Space RootRect="23.529413,9.833602,0.500000,1.000000" Height="4.13" UID="10" />
+        <Space RootRect="25.779413,8.833602,4.000000,4.000000" Height="4.13" UID="10" />
+        <Space RootRect="5.793384,1.561548,4.000000,3.500000" Height="4.13" UID="11" />
+        <Space RootRect="-1.748786,-3.311667,0.500000,1.000000" Height="2.8" UID="12" />
+        <Space RootRect="-0.498786,-2.811667,1.999999,3.000000" Height="2.8" UID="12" />
+        <Space RootRect="-2.076767,7.970956,0.500000,1.000000" Height="2.8" UID="13" />
+        <Space RootRect="-0.826767,6.970956,2.000000,3.000000" Height="2.8" UID="13" />
+        <Space RootRect="-40.304222,4.872076,0.500000,2.500000" Height="8" UID="14" />
+        <Space RootRect="-39.804222,4.372076,0.500000,3.500000" Height="6.3" UID="14" />
+        <Space RootRect="-39.304222,-1.877923,0.500000,4.000000" Height="8" UID="14" />
+        <Space RootRect="-39.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-39.304222,3.622076,0.500000,5.000000" Height="6.3" UID="14" />
+        <Space RootRect="-38.804222,-1.877923,0.500000,4.000000" Height="8" UID="14" />
+        <Space RootRect="-38.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-38.804222,3.622076,0.500000,5.000000" Height="6.3" UID="14" />
+        <Space RootRect="-38.304222,-1.877923,0.500000,4.000000" Height="8" UID="14" />
+        <Space RootRect="-38.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-38.304222,3.622076,0.500000,5.000000" Height="6.3" UID="14" />
+        <Space RootRect="-37.804222,-1.877923,0.500000,4.000000" Height="8" UID="14" />
+        <Space RootRect="-37.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-37.804222,3.622076,0.500000,5.000000" Height="6.3" UID="14" />
+        <Space RootRect="-37.304222,-1.877923,0.500000,4.000000" Height="8" UID="14" />
+        <Space RootRect="-37.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-37.304222,3.622076,0.500000,5.000000" Height="6.3" UID="14" />
+        <Space RootRect="-36.804222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-36.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-36.804222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-36.304222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-36.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-36.304222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-35.804222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-35.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-35.804222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-35.304222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-35.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-35.304222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-34.804222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-34.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-34.804222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-34.304222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-34.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-34.304222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-33.804222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-33.804222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-33.804222,3.872076,0.500000,5.500000" Height="6.3" UID="14" />
+        <Space RootRect="-33.304222,-1.627923,0.500000,3.500000" Height="8" UID="14" />
+        <Space RootRect="-33.304222,0.622076,0.500000,1.000000" Height="6.3" UID="14" />
+        <Space RootRect="-33.304222,5.122076,0.500000,3.000000" Height="8" UID="14" />
+        <Space RootRect="-32.804222,-1.377923,0.500000,3.000000" Height="8" UID="14" />
+        <Space RootRect="-32.804222,5.122076,0.500000,3.000000" Height="8" UID="14" />
+        <Space RootRect="-32.054222,-1.377923,1.000000,3.000000" Height="8" UID="14" />
+      </SubSpaces>
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="ChAct_Level_game05_path" count="0" minCameraX="-26" maxCameraX="37" minCameraZ="24" maxCameraZ="24" minCameraY="13" maxCameraY="25" />
+    <BattleLine>
+      <BattleLinePoint id="0" position="(47.9, 0.0, 0.0)" />
+      <BattleLinePoint id="100" position="(-48.3, 0.0, 0.0)" />
+      <BattleLinePoint id="999" position="(26.3, 0.0, 1.9)" />
+    </BattleLine>
+    <Slots>
+      <Slot UID="2">
+        <Node Pos="(34.1, 0.1, -5.5)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(34.1, 0.1, -3.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(34.1, 0.1, -4.5)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, -3.0)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, -5.5)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, -4.5)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="3">
+        <Node Pos="(34.1, 0.1, 6.3)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(34.1, 0.1, 8.8)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(34.1, 0.1, 7.3)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, 8.8)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, 6.3)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(32.1, 0.1, 7.3)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="4">
+        <Node Pos="(31.2, 0.1, 0.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(31.2, 0.1, 3.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(31.2, 0.1, 1.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(29.2, 0.1, 3.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(29.2, 0.1, 0.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(29.2, 0.1, 1.6)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="5">
+        <Node Pos="(18.5, 0.1, -3.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(18.5, 0.1, -0.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(18.5, 0.1, -2.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, -0.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, -3.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, -2.1)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="6">
+        <Node Pos="(18.5, 0.1, 4.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(18.5, 0.1, 6.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(18.5, 0.1, 5.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, 6.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, 4.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(16.5, 0.1, 5.1)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="7">
+        <Node Pos="(-8.9, 0.1, -3.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-8.9, 0.1, -0.5)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-8.9, 0.1, -2.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, -0.5)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, -3.0)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, -2.0)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="8">
+        <Node Pos="(-8.9, 0.1, 3.9)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-8.9, 0.1, 6.4)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-8.9, 0.1, 4.9)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, 6.4)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, 3.9)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.9, 0.1, 4.9)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+    </Slots>
+    <Tracks />
+  </Map>
+</root>

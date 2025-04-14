@@ -1,0 +1,2133 @@
+module("InGameUI", package.seeall)
+local string = string
+local Screen = UnityEngine.Screen
+local GetPick = SceneUtil.GetPick
+local GameObject = UnityEngine.GameObject
+local Mathf = Mathf
+local Debug = UnityEngine.Debug
+local WorldToLocalPoint = NGUIMath.WorldToLocalPoint
+local Random = UnityEngine.Random
+local GuideMgr = Global.GGuideManager
+local String = System.String
+local Raycast = UnityEngine.Physics.Raycast
+local GameTime = Serclimax.GameTime
+local AudioMgr = Global.GAudioMgr
+
+local ClientMsg_pb = require("ClientMsg_pb")
+local BattleMsg_pb = require("BattleMsg_pb")
+
+local Controller = Global.GController
+local TableMgr = Global.GTableMgr
+local ResourceLibrary = Global.GResourceLibrary
+local GUIMgr = Global.GGUIMgr
+local TextMgr = Global.GTextMgr
+local SetClickCallback = UIUtil.SetClickCallback
+local SetPressCallback = UIUtil.SetPressCallback
+local SetDragStartCallback = UIUtil.SetDragStartCallback
+local SetDragCallback = UIUtil.SetDragCallback
+local SetDragOverCallback = UIUtil.SetDragOverCallback
+local SetDragOutCallback = UIUtil.SetDragOutCallback
+local SetDragEndCallback = UIUtil.SetDragEndCallback
+local SetTooltipCallback = UIUtil.SetTooltipCallback
+local AddDelegate = UIUtil.AddDelegate
+local RemoveDelegate = UIUtil.RemoveDelegate
+local mainTransform = Global.GMain.transform
+
+local attackedGuideId = 10004
+local attackedGuideBattleId
+
+local maxPopulation 
+local currentBullet
+local currentEnergy
+local currentPopulation
+local oldTimeScale
+local enableCameraDrag
+local enableCameraPinch
+local chapterData
+local battleData
+local MaxHeroCount
+local cameraFollowingFireLine
+local cameraFollowTimer
+local FireAreaRadiusSqr
+local eventCDs = {}
+local isPlayTitle = true
+local exploredLevel
+
+function GetExploredLevel()
+    return exploredLevel
+end
+
+function RadarListener()
+    local warningType = RadarData.GetWarningType()
+    _ui.warnText:SetActive(false)
+    _ui.warnKuang:SetActive(false)
+    if warningType == 2 then
+        _ui.warnText:SetActive(true)
+        _ui.warnKuang:SetActive(true)
+    end
+end
+
+--部队类 
+local Army = {}
+function Army:New()
+    local army = {}
+    setmetatable(army, self)
+    self.__index = self
+    return army
+end
+
+--技能类
+local Skill = {}
+function Skill:New()
+    local skill = {}
+    setmetatable(skill, self)
+    self.__index = self
+    return skill
+end
+class "Mission"
+{
+}
+
+class "FireArea"
+{
+}
+
+function FireArea:__init__(prefab, position, leftTime)
+    local fireAreaTransform = GameObject.Instantiate(prefab).transform
+    fireAreaTransform:SetParent(_ui.bg.transform, false)
+    self.widget = fireAreaTransform:GetComponent("UIWidget")
+
+    local labelTransform = fireAreaTransform:Find("frane_FirePoint/text_miaosu")
+    if labelTransform ~= nil then
+        self.description = labelTransform:GetComponent("UILabel")
+    end
+    self.leftFire = fireAreaTransform:Find("frane_FirePoint/icon_fire (1)")
+    self.rightFire = fireAreaTransform:Find("frane_FirePoint/icon_fire")
+    self.arrow = {}
+    self.arrow.left = fireAreaTransform:Find("frane_FirePoint/jiantou_left")
+    self.arrow.top = fireAreaTransform:Find("frane_FirePoint/jiantou_top")
+    self.arrow.right = fireAreaTransform:Find("frane_FirePoint/jiantou_right")
+    self.arrow.bottom = fireAreaTransform:Find("frane_FirePoint/jiantou_bottom")
+
+    self.transform = fireAreaTransform
+    self.position = position
+    self.leftTime = leftTime
+
+    SetClickCallback(self.widget.gameObject, function(go)
+        _ui.battleCamera:SetFollowPosition(self.position)
+        cameraFollowingFireLine = false
+        cameraFollowTimer = _ui.CameraFollowFireLineDelay
+    end)
+end
+
+function FireArea:Update(deltaTime)
+    self.leftTime = self.leftTime - deltaTime
+    if self.leftTime <= 0 then
+        return false
+    end
+    local width = Screen.width
+    local height = Screen.height
+    local screenPoint = _ui.mainCamera:WorldToScreenPoint(self.position)
+    if screenPoint.x >= 0 and screenPoint.x <= width and screenPoint.y >= 0 and screenPoint.y <= height then
+        return false
+    end
+
+    local x = Mathf.Clamp(screenPoint.x, 0, width)
+    local y = Mathf.Clamp(screenPoint.y, 0, height)
+    UIUtil.ClampWidgetPosition(self.widget, Vector3(x, y, 0))
+    local direction = "left"
+    if y == height then
+        direction = "top"
+    elseif x == width then
+        direction = "right"
+    elseif y == 0 then
+        direction = "bottom"
+    end
+    for k, v in pairs(self.arrow) do
+        v.gameObject:SetActive(k == direction)
+    end
+    if self.leftFire ~= nil then
+        self.leftFire.gameObject:SetActive(direction ~= "right")
+        self.rightFire.gameObject:SetActive(direction == "right")
+    end
+    return true
+end
+local hpPercentList = {75, 50, 25, 10}
+local baseLowHPList
+local npcLowHPList
+
+local function Pause()
+    SceneManager.instance.gScRoots.GamePaused = true
+end
+
+local function Resume()
+    SceneManager.instance.gScRoots.GamePaused = false
+end
+
+local function GetSelectedArmy()
+    return _ui.armyList[_ui.armyList.selectedIndex]
+end
+
+local function GetSelectedSkill()
+    return _ui.skillList[_ui.skillList.selectedIndex]
+end
+
+--设置子弹
+local function SetCurrentBullet(b, playAnim)
+    QuestList.SetCurrentBullet(b)
+    if b < currentBullet then
+        QuestList.AddUsedBullet(currentBullet - b)
+    end
+    if playAnim then
+        if b > currentBullet then
+            _ui.bullet.greenAnim:Play()
+        end
+    end
+    currentBullet = b
+    _ui.bullet.label.text = currentBullet
+end
+
+--设置能量
+local function SetCurrentEnergy(e, playAnim)
+    QuestList.SetCurrentEnergy(e)
+    if e < currentEnergy then
+        QuestList.AddUsedEnergy(currentEnergy - e)
+    end
+    if playAnim then
+        if e > currentEnergy then
+            _ui.energy.greenAnim:Play()
+        end
+    end
+    currentEnergy = e
+    _ui.energy.label.text = currentEnergy
+end
+
+--设置人口
+local function SetCurrentPopulation(p, playAnim)
+    QuestList.SetCurrentPopulation(p)
+    if playAnim then
+        if p < currentPopulation then
+            _ui.population.redAnim:Play()
+        end
+    end
+    currentPopulation = p
+    _ui.population.label.text = currentPopulation .. "/" .. maxPopulation
+    if currentPopulation >= maxPopulation then
+        _ui.population.label.color = Color.red
+    else
+        _ui.population.label.color = Color.white
+    end
+end
+
+local function SetMaxPopulation(p)
+    if p~=0 then
+        maxPopulation = p
+        _ui.population.label.text = currentPopulation .. "/" .. maxPopulation
+    end
+end
+
+--设置剩余秒数
+local function SetLeftSecond(s)
+    leftSecond = s
+    if leftSecond < 60 then
+        _ui.lbTime.gradientTop = Color(0xf5402e)
+        _ui.lbTime.gradientBottom = Color(0x97100a)
+    end
+    _ui.lbTime.text = string.format("%d:%02d", math.floor(leftSecond / 60), leftSecond % 60)
+end
+
+--刷新所有部队按钮
+local function UpdateArmyList(deltaTime)
+    for i, v in ipairs(_ui.armyList) do
+        if not v.ready then
+            break
+        end
+        local isEnabled = true
+        if currentBullet < v.bulletCost then
+            isEnabled = false
+            v.iconBullet1.gameObject:SetActive(false)
+            v.iconBullet2.gameObject:SetActive(true)
+        else
+            v.iconBullet1.gameObject:SetActive(true)
+            v.iconBullet2.gameObject:SetActive(false)
+        end
+
+        if currentPopulation >= maxPopulation then
+            isEnabled = false
+            v.iconPopulation1.gameObject:SetActive(false)
+            v.iconPopulation2.gameObject:SetActive(true)
+        else
+            v.iconPopulation1.gameObject:SetActive(true)
+            v.iconPopulation2.gameObject:SetActive(false)
+        end
+
+        if v.cooldown < v.totalCooldown then
+            v.cooldown = v.cooldown + deltaTime
+            v.mask.gameObject:SetActive(true)
+            v.mask.fillAmount = v.cooldown / v.totalCooldown
+            if v.cooldown >= v.totalCooldown then
+                v.mask.gameObject:SetActive(false)
+                if isEnabled then
+                    v.animShine.anim.gameObject:SetActive(true)
+                    v.animShine:Play()
+                end
+            end
+            isEnabled = false
+        end
+
+        v.isEnabled = isEnabled
+        v.btn.isEnabled = isEnabled
+        if not isEnabled and _ui.armyList.selectedIndex == i then
+            _ui.armyList.selectedIndex= 0
+            _ui.fireLine:SetActive(false)
+            v.uiAnim:Playback()
+        end
+        v.selected.gameObject:SetActive(_ui.armyList.selectedIndex == i)
+    end
+end
+
+--刷新所有技能按钮
+local function UpdateSkillList(deltaTime)
+    for i, v in ipairs(_ui.skillList) do
+        if not v.ready then
+            return
+        end
+        local isEnabled = true
+        if tonumber(currentEnergy) < tonumber(v.energyCost) then
+            isEnabled = false
+            v.iconEnergy1.gameObject:SetActive(false)
+            v.iconEnergy2.gameObject:SetActive(true)
+        else
+            v.iconEnergy1.gameObject:SetActive(true)
+            v.iconEnergy2.gameObject:SetActive(false)
+        end
+
+        if v.cooldown < v.totalCooldown then
+            v.cooldown = v.cooldown + deltaTime
+            v.mask.gameObject:SetActive(true)
+            v.mask.fillAmount = v.cooldown / v.totalCooldown
+
+            if v.totalCooldown - v.cooldown > 5 then
+                v.cdLabel.text = string.format("%.0f" , v.totalCooldown - v.cooldown)
+            else
+                v.cdLabel.text = string.format("%.1f" , v.totalCooldown - v.cooldown)
+            end
+
+            if v.cooldown >= v.totalCooldown then
+                v.mask.gameObject:SetActive(false)
+                if isEnabled then
+                    v.animShine.anim.gameObject:SetActive(true)
+                    v.animShine:Play()
+                end
+            end
+            isEnabled = false
+        end
+
+        v.isEnabled = isEnabled
+        v.btn.isEnabled = isEnabled
+        if not isEnabled and _ui.skillList.selectedIndex == i then
+            _ui.skillList.selectedIndex = 0
+            v.uiAnim:Playback()
+        end
+        v.selected.gameObject:SetActive(_ui.skillList.selectedIndex == i)
+    end
+end
+
+local function GetTouchGroundPos(maskType)
+    local mask = "masklayer"
+    if maskType ~= nil and maskType ~= "NA" then
+        mask = maskType
+        local obj = _ui.maskobjs[mask]
+
+        if obj ~= nil then
+            if _ui.CurMaskObj ~= obj then
+                if _ui.CurMaskObj ~= nil then
+                    _ui.CurMaskObj:SetActive(false)
+                end
+                _ui.CurMaskObj = obj
+                _ui.CurMaskObj:SetActive(true)
+            end
+        else
+            if _ui.CurMaskObj ~= nil then
+                _ui.CurMaskObj:SetActive(false)
+            end
+            _ui.CurMaskObj = nil
+        end
+    end
+    local touchPos = UICamera.currentTouch.pos
+    local ray = _ui.mainCamera:ScreenPointToRay(touchPos)
+    local distance = _ui.mainCamera.farClipPlane - _ui.mainCamera.nearClipPlane
+    local ret , hit = Raycast(ray, hit, distance, LayerMask.GetMask(mask))
+    if not ret then
+        return ray:GetPoint(1) , ret
+    else
+        return hit.point , ret
+    end
+end
+
+local function RequestCast()
+    if not PVPUI.IsPVP() then
+        coroutine.start(function()
+            WaitForRealSeconds(2)
+            if _ui == nil then
+                return
+            end
+            _ui.skillEffect.bg.gameObject:SetActive(false)
+        end)
+        _ui.csBattle:RequestCast(_ui.skillList.selectedIndex - 1, _ui.touchGroundPos)
+        _ui.skillEffect.bg.gameObject:SetActive(true)
+        local skill = GetSelectedSkill()
+        _ui.skillEffect.heroIcon.mainTexture = ResourceLibrary:GetIcon("Icon/hero_half/", skill.heroData.picture)
+    end
+    UpdateSkillList(0) 
+end
+
+local function BgPressCallback(go, isPressed)
+    local army = GetSelectedArmy()
+    if army ~= nil and army.isEnabled then
+        if isPressed then
+            _ui.touchGroundPos = GetTouchGroundPos()
+            if not _ui.sceneManager:CanCreateUnit(army.groupData.id, _ui.touchGroundPos) then
+                _ui.prohibit.gameObject:SetActive(true)
+                local localPosition = WorldToLocalPoint(_ui.touchGroundPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+                _ui.prohibit.localPosition = Vector3(localPosition.x, localPosition.y, 0)
+            else
+                _ui.prohibit.gameObject:SetActive(false)
+                army.prefab.transform.position = _ui.touchGroundPos
+                local attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+                army.prefab.transform.rotation = Quaternion.LookRotation(Vector3(attackDir.x, attackDir.y, 0))
+                army.prefab.gameObject:SetActive(true)
+            end
+        else
+            _ui.prohibit.gameObject:SetActive(false)
+            army.prefab.gameObject:SetActive(false)
+            if _ui.touchGroundPos ~= nil then
+                if PVPUI.IsPVP() then
+                    army.prefab.gameObject:SetActive(true)			        
+                    PVPUI.CreateUnit(army.unitData.id,army.groupData.id, _ui.touchGroundPos,_ui.bonusList[_ui.armyList.selectedIndex],
+                    function()
+                        QuestList.IncreaseUsedArmyCount(army.groupData.id)
+                        army.cooldown = 0
+                        UpdateArmyList(0)
+                        army.prefab.gameObject:SetActive(false)
+                    end,
+                    function()
+                        army.prefab.gameObject:SetActive(false)
+                    end)
+                else
+                    if _ui.sceneManager:CreateUnit(army.unitData.id,army.groupData.id, _ui.touchGroundPos,_ui.bonusList[_ui.armyList.selectedIndex]) then
+                        QuestList.IncreaseUsedArmyCount(army.groupData.id)
+                        army.cooldown = 0
+                        UpdateArmyList(0)
+                    end
+                end
+            end
+        end
+    end
+
+    local skill = GetSelectedSkill()
+    if skill ~= nil and skill.isEnabled then
+        if isPressed then
+            local isvalid
+            --print(skill.maskType,isPressed)
+            _ui.touchGroundPos,isvalid = GetTouchGroundPos(skill.maskType)    
+            if isvalid then
+                skill.prefab.transform.position = _ui.touchGroundPos
+                _ui.prohibit.gameObject:SetActive(false)
+                skill.prefab.gameObject:SetActive(true)
+            else
+                local localPosition = WorldToLocalPoint(_ui.touchGroundPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+                _ui.prohibit.localPosition = Vector3(localPosition.x, localPosition.y, 0)
+                _ui.prohibit.gameObject:SetActive(true)
+                skill.prefab.gameObject:SetActive(false)
+            end            
+        else
+            --print(skill.maskType,isPressed)
+            skill.prefab.gameObject:SetActive(false)
+            _ui.prohibit.gameObject:SetActive(false)
+            local isvalid
+            _ui.touchGroundPos,isvalid = GetTouchGroundPos(skill.maskType)                
+            if isvalid then
+                if PVPUI.IsPVP() then 
+                    skill.prefab.gameObject:SetActive(true)
+                    PVPUI.RequestCast(_ui.skillList.selectedIndex - 1, _ui.touchGroundPos,
+                    function() 
+                        UpdateSkillList(0)
+                        skill.prefab.gameObject:SetActive(false)
+                        if _ui.CurMaskObj ~= nil then
+                            _ui.CurMaskObj:SetActive(false)
+                        end
+                        _ui.CurMaskObj = nil                        
+                    end,
+                    function() 
+                        skill.prefab.gameObject:SetActive(false)
+                        if _ui.CurMaskObj ~= nil then
+                            _ui.CurMaskObj:SetActive(false)
+                        end
+                        _ui.CurMaskObj = nil 
+                    end)
+                else                  
+                    RequestCast()
+                    skill.prefab.gameObject:SetActive(false)
+                    if _ui.CurMaskObj ~= nil then
+                        _ui.CurMaskObj:SetActive(false)
+                    end
+                    _ui.CurMaskObj = nil 
+
+                end
+            end           
+        end
+    end
+end
+
+function ResetCameraBattleHeight()
+    local cameraTransform = _ui.mainCamera.transform
+    local levelData = _ui.sceneManager.gScRoots.LevelData
+    local pos = cameraTransform.localPosition
+    local minX = levelData.MinCameraX
+    local maxX = levelData.MaxCameraX
+    local minY = levelData.MinCameraY
+    local maxY = levelData.MaxCameraY
+    local minZ = levelData.MinCameraZ
+    local maxZ = levelData.MaxCameraZ
+
+    local cosForwardDown = Vector3.Dot(cameraTransform.forward, Vector3.down)
+    local maxZoom = (pos.y - maxY) / cosForwardDown
+
+    _ui.battleCamera:Zoom(maxZoom)
+end
+
+local function OnUICameraDrag(go, delta)
+    if go ~= _ui.bg.gameObject and go ~= _ui.fg.gameObject then
+        return
+    end
+    if Global.GController:GetTouches().Count > 1 then
+        return
+    end
+    if not enableCameraDrag then
+        return
+    end
+    local deltaX = delta.x
+    local deltaY = delta.y
+    local dragSpeed = 0.02
+    _ui.battleCamera:Move(deltaX * dragSpeed, deltaY * dragSpeed)
+    cameraFollowingFireLine = false
+    _ui.battleCamera:SetFollowPosition(nil)
+    cameraFollowTimer = _ui.CameraFollowFireLineDelay
+    _ui.prohibit.gameObject:SetActive(false)
+    _ui.touchGroundPos = nil
+
+    local army = GetSelectedArmy()
+    if army ~= nil then
+        army.prefab.gameObject:SetActive(false)
+    end
+    local skill = GetSelectedSkill()
+    if skill ~= nil then
+        skill.prefab.gameObject:SetActive(false)
+    end
+    if _ui.skillList.selectedIndex ~= 0 then
+        _ui.skillList[_ui.skillList.selectedIndex].uiAnim:Playback()
+    end
+    _ui.skillList.selectedIndex = 0
+    if _ui.CurMaskObj ~= nil then
+        _ui.CurMaskObj:SetActive(false)
+    end
+    _ui.CurMaskObj = nil 
+    UpdateSkillList(0)
+end
+
+function CancelArmyPressState()
+    _ui.armyList.selectedIndex = 0
+    _ui.fireLine:SetActive(false)
+    UpdateArmyList(0)
+    UpdateSkillList(0)
+end
+
+--部队按钮
+local function ArmyPressCallback(go, isPressed)
+    if isPressed then
+        if _ui.armyList.selectedIndex ~= 0 then
+            _ui.armyList[_ui.armyList.selectedIndex].uiAnim:Playback()
+        end
+        if _ui.skillList.selectedIndex ~= 0 then
+            _ui.skillList[_ui.skillList.selectedIndex].uiAnim:Playback()
+            _ui.skillList.selectedIndex = 0
+        end
+
+        local index = tonumber(go.name)
+        local army = _ui.armyList[index]
+        if _ui.armyList.selectedIndex == index then
+            _ui.armyList.selectedIndex = 0
+            _ui.fireLine:SetActive(false)
+        else
+            _ui.armyList.selectedIndex = index
+            _ui.fireLine:SetActive(true)
+            army.uiAnim:Play()
+            local firePoint = _ui.scUnitMgr:GetCurrentFirePoint(0)
+            local attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+            local triggerPos = firePoint - Vector3(attackDir.x, firePoint.y, attackDir.y) * _ui.TriggerCameraFollowFireLineOffset
+            local viewPos = _ui.mainCamera:WorldToViewportPoint(triggerPos)
+            if viewPos.x < 0 or viewPos.y < 0 or viewPos.y > 1 then
+                if _ui.battleCamera ~= nil then 
+                    local firePoint = _ui.scUnitMgr:GetCurrentFirePoint(0)
+                    local attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+                    local targetPos = firePoint - Vector3(attackDir.x, 0, attackDir.y) * _ui.CameraFollowFireLineOffset 
+                    targetPos = firePoint
+                    _ui.battleCamera:SetFollowPosition(targetPos)
+                end
+            end
+            GuideMgr:OnIngameUI(1,index)
+        end
+        UpdateArmyList(0)
+        UpdateSkillList(0)
+    else
+        _ui.prohibit.gameObject:SetActive(false)
+    end
+end
+
+local function ArmyDragCallback(go, delta)
+    local army = GetSelectedArmy()
+    if army ~= nil and army.isEnabled then
+        _ui.touchGroundPos = GetTouchGroundPos()
+        if not _ui.sceneManager:CanCreateUnit(army.groupData.id, _ui.touchGroundPos) then
+            _ui.prohibit.gameObject:SetActive(true)
+            local localPosition = WorldToLocalPoint(_ui.touchGroundPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+            _ui.prohibit.localPosition = Vector3(localPosition.x, localPosition.y, 0)
+            army.prefab.gameObject:SetActive(false)
+        else
+            _ui.prohibit.gameObject:SetActive(false)
+            army.prefab.transform.position = _ui.touchGroundPos
+            local attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+            army.prefab.transform.rotation = Quaternion.LookRotation(Vector3(attackDir.x, attackDir.y, 0))
+            army.prefab.gameObject:SetActive(true)
+        end
+    end
+end
+
+local function ArmyDragOverCallback(go)
+end
+
+local function ArmyDragOutCallback(go)
+end
+
+local function ArmyDragEndCallback(go)
+    local index = tonumber(go.name)
+    local army = _ui.armyList[index]
+    if _ui.touchGroundPos ~= nil and army ~= nil and army.isEnabled then
+        if PVPUI.IsPVP() then 
+            if UICamera.hoveredObject ~= _ui.bg.gameObject or not PVPUI.CreateUnit(army.unitData.id,army.groupData.id, _ui.touchGroundPos,_ui.bonusList[_ui.armyList.selectedIndex],
+                function()
+                    QuestList.IncreaseUsedArmyCount(army.groupData.id)
+                    army.cooldown = 0
+                    UpdateArmyList(0)
+                    army.prefab.gameObject:SetActive(false)
+                end,
+                function() 
+                    army.prefab.gameObject:SetActive(false)
+                end) then
+                if _ui.armyList.selectedIndex ~= 0 then
+                    _ui.armyList[_ui.armyList.selectedIndex].uiAnim:Playback()
+                    _ui.armyList.selectedIndex = 0
+                    _ui.fireLine:SetActive(false)
+                end
+                army.prefab.gameObject:SetActive(false)
+            end
+        else        
+            if UICamera.hoveredObject == _ui.bg.gameObject and _ui.sceneManager:CreateUnit(army.unitData.id,army.groupData.id, _ui.touchGroundPos,_ui.bonusList[_ui.armyList.selectedIndex]) then
+                QuestList.IncreaseUsedArmyCount(army.groupData.id)
+                army.cooldown = 0
+                UpdateArmyList(0)
+            else
+                if _ui.armyList.selectedIndex ~= 0 then
+                    _ui.armyList[_ui.armyList.selectedIndex].uiAnim:Playback()
+                    _ui.armyList.selectedIndex = 0
+                    _ui.fireLine:SetActive(false)
+                end
+            end
+            army.prefab.gameObject:SetActive(false)
+        end
+    end
+end
+
+local function ArmyTooltipCallback(go, show)
+    local index = tonumber(go.name)
+    local army = _ui.armyList[index]
+    if show then
+        Tooltip.ShowItemTip({name = army.name, text = army.description})
+    else
+        Tooltip.HideItemTip()
+    end
+end
+
+--技能按钮
+local function SkillPressCallback(go, isPressed)
+    if isPressed then
+        if _ui.skillList.selectedIndex ~= 0 then
+            _ui.skillList[_ui.skillList.selectedIndex].uiAnim:Playback()
+        end
+        if _ui.armyList.selectedIndex ~= 0 then
+            _ui.armyList[_ui.armyList.selectedIndex].uiAnim:Playback()
+            _ui.armyList.selectedIndex = 0
+            _ui.fireLine:SetActive(false)
+        end
+
+        local index = tonumber(go.name)
+        local skill = _ui.skillList[index]
+        if _ui.skillList.selectedIndex == index then
+            _ui.skillList.selectedIndex = 0
+            if _ui.CurMaskObj ~= nil then
+                _ui.CurMaskObj:SetActive(false)
+            end
+            _ui.CurMaskObj = nil             
+        else
+            _ui.skillList.selectedIndex = index
+            skill.uiAnim:Play()
+            local isvalid
+            _ui.touchGroundPos,isvalid = GetTouchGroundPos(skill.maskType)               
+        end
+
+        GuideMgr:OnIngameUI(2,index)
+        UpdateArmyList(0)
+        UpdateSkillList(0)        
+    end
+end
+
+local function SkillDragCallback(go, delta)
+    local skill = GetSelectedSkill()
+    if skill ~= nil and skill.isEnabled then
+        local isvalid
+        _ui.touchGroundPos,isvalid = GetTouchGroundPos(skill.maskType)
+        if isvalid then
+            skill.prefab.transform.position = _ui.touchGroundPos
+            _ui.prohibit.gameObject:SetActive(false)
+            skill.prefab.gameObject:SetActive(true)
+        else
+            local localPosition = WorldToLocalPoint(_ui.touchGroundPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+            _ui.prohibit.localPosition = Vector3(localPosition.x, localPosition.y, 0)
+            _ui.prohibit.gameObject:SetActive(true)
+            skill.prefab.gameObject:SetActive(false)
+        end
+    end
+end
+
+local function SkillDragStartStartCallback(go)
+end
+
+local function SkillDragOverCallback(go)
+end
+
+local function SkillDragOutCallback(go)
+end
+
+local function SkillDragEndCallback(go)
+    local skill = GetSelectedSkill()
+    if skill ~= nil and skill.isEnabled then
+        if UICamera.hoveredObject == _ui.bg.gameObject then         
+            local isvalid
+            _ui.touchGroundPos,isvalid = GetTouchGroundPos(skill.maskType)
+            if isvalid then
+                if PVPUI.IsPVP() then 
+                    PVPUI.RequestCast(_ui.skillList.selectedIndex - 1, _ui.touchGroundPos,
+                    function() 
+                        UpdateSkillList(0)
+                    end,
+                    function() 
+                    end)
+                else                  
+                    RequestCast()
+                end
+            else
+                if _ui.skillList.selectedIndex ~= 0 then
+                    _ui.skillList[_ui.skillList.selectedIndex].uiAnim:Playback()
+                    _ui.skillList.selectedIndex = 0
+                end 
+            end
+        else
+            if _ui.skillList.selectedIndex ~= 0 then
+                _ui.skillList[_ui.skillList.selectedIndex].uiAnim:Playback()
+                _ui.skillList.selectedIndex = 0
+            end
+        end
+        _ui.prohibit.gameObject:SetActive(false)
+        skill.prefab.gameObject:SetActive(false)
+        if _ui.CurMaskObj ~= nil then
+            _ui.CurMaskObj:SetActive(false)
+        end
+        _ui.CurMaskObj = nil
+    end
+end
+
+local function SkillTooltipCallback(go, show)
+    local index = tonumber(go.name)
+    local skill = _ui.skillList[index]
+    if show then
+        Tooltip.ShowItemTip({name = skill.name, text = skill.description})
+    else
+        Tooltip.HideItemTip()
+    end
+end
+
+function RequestEscapeBattle()
+    local req = BattleMsg_pb.MsgBattleEndRequest()
+    req.chapterlevel = battleData.id
+    req.escape = true
+    req.win = false
+    for i = 1, 3 do
+        req.star:append(false)
+    end
+    req.battleTime = battleData.time - leftSecond
+    LuaNetwork.Request(Category_pb.Battle, BattleMsg_pb.BattleTypeId.MsgBattleEndRequest, req:SerializeToString(), function(typeId, data)
+		local msg = BattleMsg_pb.MsgBattleEndResponse()
+        msg:ParseFromString(data)
+		if msg.code == ReturnCode_pb.Code_OK then
+
+            ChapterListData.UpdateChapterData(msg.chapter)
+            
+           
+        else
+            Global.ShowError(msg.code)
+        end
+    end, true)
+end
+
+--撤退按钮
+local function RetreatPressCallback(go, isPressed)
+    if not isPressed then
+        Hide()
+        GuideMgr:InPause()
+        pause.SetBattleData(battleData)
+        GUIMgr:CreateMenu("pause", false)
+    end
+end
+
+local function SkipClickCallback(go)
+    if not PVPUI.IsPVP() then
+        Resume()
+        _ui.csBattle:NotifyTitleFinished()
+    else
+        PVPUI.RequestPVPClientReady()
+    end
+end
+
+function Show()
+    isPlayTitle = false
+    --print(isPlayTitle)
+    _ui.bg.gameObject:SetActive(true)
+    _ui.panel_hud.gameObject:SetActive(true)
+    _ui.missionList.bg.gameObject:SetActive(battleData.beginText == 1)
+end
+
+function Hide()
+	if _ui ~= nil then
+		_ui.bg.gameObject:SetActive(false)
+		_ui.panel_hud.gameObject:SetActive(false)
+		_ui.missionList.bg.gameObject:SetActive(false)
+	end
+end
+
+function AddHud(_hud)
+    if _ui.panel_hud ~= nil then
+        _hud.transform:SetParent(_ui.panel_hud, false)
+        _hud.layer = gameObject.layer
+    end
+end
+
+function AddEventCD(id ,active, timeSpan , tartPosX , tartPosY , tartPosZ)
+    if _ui.eventCD ~= nil then
+        if not active then
+            for i=1 , #eventCDs  , 1 do
+                if eventCDs[i].go.name == "pro"..id then
+                    eventCDs[i].active = false
+                end
+            end
+        else
+            if timeSpan ~= 0 then
+                local event = {}
+                local eventEff = NGUITools.AddChild(_ui.eventCD.gameObject , _ui.eventCDPrefab.gameObject)
+                eventEff.transform:SetParent(_ui.eventCD , false)
+                eventEff.gameObject:SetActive(false)
+                eventEff.name = "pro"..id
+
+                event.go = eventEff
+                event.sprite = eventEff.transform:Find("cd frame/cd_time"):GetComponent("UISprite")
+                event.targetPos = {x=tartPosX , y=tartPosY , z=tartPosZ}
+                event.timespan = timeSpan
+                event.duration = timeSpan
+                event.active = true
+                table.insert(eventCDs , event)
+            end
+        end
+    end
+end
+
+--单位创建回调
+local function OnUnitCreated(unit)
+    SetCurrentPopulation(_ui.scUnitMgr:GetCurrentPopulation(0), true)
+end
+
+--单位死亡回调
+local function OnUnitRemoved(unit)
+    if Serclimax.Unit.ScUnit._isFriend(1, unit.UnitAttr.TeamId) then
+        --tableid小于10000000为玩家的，大于为友军的
+        if unit.tableid < 10000000 then
+            QuestList.IncreaseSelfDeadCount(unit.tableid)
+        else
+            QuestList.IncreaseFriendDeadCount(unit.tableid)
+        end
+    else
+        QuestList.IncreaseKillEnemyCount(unit.tableid)
+    end
+    SetCurrentPopulation(_ui.scUnitMgr:GetCurrentPopulation(0), true)
+    local tag = unit.unitTag
+    if tag == "BaseEnemy" then
+        QuestList.SetEnemyBaseDestroyed()
+    elseif tag == "BaseUs" then
+        QuestList.SetOurBaseDestroyed()
+    end
+end
+
+local function CheckAttackedGuide()
+    if attackedGuideBattleId ~= nil and attackedGuideBattleId == battleData.id then
+        GuideMgr:StartGuide(attackedGuideId)
+        attackedGuideBattleId = nil
+    end
+end
+
+local function OnUnitHurt(unit, hurt)
+    if _ui == nil or hurt < 0 then
+        return
+    end
+    if unit.UnitAttribute.TeamID ~= 1 then
+        return
+    end
+
+    local position = unit.CurPosV3
+
+    local tag = unit.Tag
+    local viewportPoint = _ui.mainCamera:WorldToViewportPoint(position)
+
+    if string.starts(tag, "BaseUs") then
+        local unitSmallVisible = viewportPoint.x > 0 and viewportPoint.x < 1 and viewportPoint.y > -0 and viewportPoint.y < 1
+        local unitBigVisible = viewportPoint.x > -0.15 and viewportPoint.x < 1.15 and viewportPoint.y > -0.15 and viewportPoint.y < 1.15
+        local hpPercent = 0
+        local maxHP = unit.UnitAttribute.MaxHp
+        local hp = unit.UnitAttribute.HP
+        if maxHP > 0 then
+            hpPercent = hp / maxHP
+        end
+        if tag == "BaseUs_NPC" then
+            QuestList.SetNPCHpPercentage(hpPercent * 100)
+        elseif tag == "BaseUs" then
+            QuestList.SetBaseUsHpPercentage(hpPercent * 100)
+        end
+
+        for _, v in ipairs(hpPercentList) do
+            if hpPercent < v * 0.01 then
+                local needNotice = false
+                local lowHPText
+                if tag == "BaseUs" and not baseLowHPList[v] then
+                    baseLowHPList[v] = true
+                    needNotice = true
+                    lowHPText = String.Format(TextMgr:GetText(Text.firepoint_ui1), v.."%")
+
+                elseif tag == "BaseUs_NPC" and not npcLowHPList[v] then
+                    npcLowHPList[v] = true
+                    needNotice = true
+                    lowHPText = String.Format(TextMgr:GetText(Text.firepoint_ui2), v.."%")
+                end
+                if needNotice then
+                    if unitSmallVisible then
+                        local textPos = _ui.uiCamera:ViewportToWorldPoint(Vector3(viewportPoint.x, viewportPoint.y, 0))
+                        FloatText.ShowAt(textPos, lowHPText, Color.red)
+                    else
+                        local fireArea = _ui.fireNoticeList[tag] or FireArea(_ui.fireNoticePrefab, position, 5)
+                        fireArea.description.text = lowHPText
+                        fireArea.lowHPNotice = true
+                        _ui.fireNoticeList[tag] = fireArea
+                        fireArea.leftTime = 5
+                        fireArea:Update(0)
+                    end
+                end
+            end
+        end
+
+        if not unitBigVisible then
+            local fireArea = _ui.fireNoticeList[tag] or FireArea(_ui.fireNoticePrefab, position, 5)
+            if not fireArea.lowHPNotice then
+                local attackedText
+                if tag == "BaseUs" then
+                    attackedText = TextMgr:GetText(Text.firepoint_ui3)
+                elseif tag == "BaseUs_NPC" then
+                    attackedText = TextMgr:GetText(Text.firepoint_ui4)
+                end
+                fireArea.description.text = attackedText
+                _ui.fireNoticeList[tag] = fireArea
+                fireArea.leftTime = 5
+                fireArea:Update(0)
+                CheckAttackedGuide()
+            end
+        end
+        return
+    end
+
+    local inFireArea = false
+    for _, v in ipairs(_ui.fireAreaList) do
+        if (v.position - position).sqrMagnitude < FireAreaRadiusSqr then
+            inFireArea = true
+            break
+        end
+    end
+
+    if inFireArea then
+        return
+    end
+
+    if viewportPoint.x > -0.15 and viewportPoint.x < 1.15 and viewportPoint.y > -0.15 and viewportPoint.y < 1.15 then
+        return
+    end
+
+    local fireArea = FireArea(_ui.fireAreaPrefab, position, 5)
+
+    fireArea:Update(0)
+
+    table.insert(_ui.fireAreaList, fireArea)
+end
+
+local function OnUnitArrived(unit)
+    QuestList.IncreaseTargetArrived()
+end
+
+--场景加载完毕回调
+local function OnSceneLoadFinished()
+    _ui.mainCamera = UnityEngine.Camera.main
+    _ui.scUnitMgr = _ui.sceneManager.gScRoots:GetUnitMgr()
+    SetCurrentPopulation(_ui.scUnitMgr:GetCurrentPopulation(0), false)
+    AddDelegate(_ui.scUnitMgr, "onUnitHurt", OnUnitHurt)
+    AddDelegate(_ui.scUnitMgr, "onUnitArrived", OnUnitArrived)
+
+    local base_ids,max_ids = UnlockArmyData.GetMaxLevelArmyArray()
+    for i=1,#(base_ids),1 do
+        _ui.sceneManager:AddUnlockMaxAmryID(base_ids[i],max_ids[i])
+    end
+
+    local maskobjs = _ui.sceneManager:GetMaskObjs()
+    if maskobjs ~= nil then
+        _ui.maskobjs = {}
+        for i =1,maskobjs.Length,1 do
+            if maskobjs[i-1] ~= nil then
+                _ui.maskobjs[maskobjs[i-1].name] =maskobjs[i-1] 
+                maskobjs[i-1]:SetActive(false)
+            end
+        end
+    end
+    _ui.CurMaskObj = nil
+end
+
+local function EndGame(gameWin)
+    local star = {}
+    local starCount = 0
+    if gameWin then
+        for i, v in ipairs(_ui.missionList.list) do
+            if v.check.gameObject.activeSelf then
+                star[i] = true
+                starCount = starCount + 1
+            else
+                star[i] = false
+            end
+        end
+    else
+        for i = 1, 3 do
+            star[i] = false
+        end
+    end
+    WinLose.SetStarCount(starCount)
+    WinLose.SetStar(star)
+    if PVPUI.IsPVP() then
+        PVPUI.ShowWinlose(function(msg) 
+            WinLose.SetBattleRewards(msg)	
+            WinLose.Show()
+        end)
+        return
+    end   
+
+    local battleState = GameStateBattle.Instance
+    local battleInfo = ActivityStage.GetCurBattleInfo()
+    if battleState.IsRandomBattle then
+        if battleInfo == nil then
+            battleInfo = ActivityData.GetActivityData(5).battle.battle[1]
+        end
+        local req = BattleMsg_pb.MsgBattleRandomPVEEndRequest()
+        req.chapterlevel = battleData.id
+        for _, v in ipairs(star) do
+            req.star:append(v)
+        end
+        req.escape = false
+        req.win = gameWin
+
+        req.missionId = battleInfo.missionId
+        req.battleTime = battleData.time - leftSecond
+        LuaNetwork.Request(Category_pb.Battle, BattleMsg_pb.BattleTypeId.MsgBattleRandomPVEEndRequest, req:SerializeToString(), function(typeId, data)
+            local msg = BattleMsg_pb.MsgBattleRandomPVEEndResponse()
+            msg:ParseFromString(data)
+            if msg.code == ReturnCode_pb.Code_OK then
+                GUIMgr:SendDataReport("reward", "battle end:" ..battleData.id, "".. MoneyListData.ComputeDiamond(msg.fresh.money.money))
+                battleInfo.complete = msg.battleComplete
+                WinLose.SetBattleId(battleData.id)
+                WinLose.SetBattleRewards(msg)	
+                WinLose.OpenRandomPVE()
+                WinLose.Show()
+
+                --send win/lose data report-------------
+                if gameWin then 
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "completed", "" .. starCount)
+                else
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "failed", "0")
+                end
+                if msg.pkValueNotEnough ~= 0 then
+                    MessageBox.Show(TextMgr:GetText("activity_content_129"))
+                end
+                -----------------------------------------
+            else
+                Global.ShowError(msg.code)
+            end
+
+        end, true)
+        return
+    end
+
+    if battleState.IsGuildMonsterBattle then
+        local req = BattleMsg_pb.MsgBattleGuildMonsterEndRequest()
+        --print(battleState.activeId , battleState.missionId)
+
+
+        req.data.activityid = battleState.activeId
+        req.data.missionid = battleState.missionId
+
+        req.data.chapterlevel = battleData.id
+        for _, v in ipairs(star) do
+            req.data.star:append(v)
+        end
+        req.data.escape = false
+        req.data.win = gameWin
+        req.data.battleTime = battleData.time - leftSecond
+        LuaNetwork.Request(Category_pb.Battle, BattleMsg_pb.BattleTypeId.MsgBattleGuildMonsterEndRequest, req:SerializeToString(), function(typeId, data)
+            local msg = BattleMsg_pb.MsgBattleGuildMonsterEndResponse()
+            msg:ParseFromString(data)
+            if msg.code == ReturnCode_pb.Code_OK then
+                GUIMgr:SendDataReport("reward", "battle end:" ..battleData.id, "".. MoneyListData.ComputeDiamond(msg.data.fresh.money.money))
+                WinLose.SetBattleId(battleData.id)
+                WinLose.SetBattleRewards(msg.data)
+                UnionRadarData.UpdateUnionRadarData(msg.monster)
+                WinLose.OpenGuildMonsterPVE()
+                WinLose.Show()
+
+                --send win/lose data report-------------
+                if gameWin then 
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "completed", "" .. starCount)
+                else
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "failed", "0")
+                end
+                -----------------------------------------
+            else
+                Global.ShowError(msg.code)
+            end
+
+        end, true)
+        return
+    end
+
+    if battleState.IsPveMonsterBattle then
+        local req = BattleMsg_pb.MsgBattleMapDigTreasureEndRequest()
+        --print(battleState.activeId , battleState.missionId)
+        req.monsterSeUid = battleState.pveMonsterUid
+
+        req.data.chapterlevel = battleData.id
+        for _, v in ipairs(star) do
+            req.data.star:append(v)
+        end
+        req.data.escape = false
+        req.data.win = gameWin
+        req.data.battleTime = battleData.time - leftSecond
+        LuaNetwork.Request(Category_pb.Battle, BattleMsg_pb.BattleTypeId.MsgBattleMapDigTreasureEndRequest, req:SerializeToString(), function(typeId, data)
+            local msg = BattleMsg_pb.MsgBattleMapDigTreasureEndResponse()
+            msg:ParseFromString(data)
+            if msg.code == ReturnCode_pb.Code_OK then
+                GUIMgr:SendDataReport("reward", "battle end:" ..battleData.id, "".. MoneyListData.ComputeDiamond(msg.data.fresh.money.money))
+                WinLose.SetBattleId(battleData.id)
+                WinLose.SetBattleRewards(msg.data)
+                PveMonsterData.UpdatePveMonsterData(msg.winMonster)
+                WinLose.OpenPveMonsterPVE()
+                WinLose.Show()
+                ActivityTreasureData.RequestData()
+                
+
+                --send win/lose data report-------------
+                if gameWin then 
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "completed", "" .. starCount)
+                else
+                    GUIMgr:SendDataReport("level", "" .. battleData.id, "failed", "0")
+                end
+                -----------------------------------------
+            else
+                Global.ShowError(msg.code)
+            end
+
+        end, true)
+        return
+    end
+
+    local chapterCompleted = ChapterListData.HasChapterCompleted(chapterData)
+    exploredLevel = nil
+    local levelExplored = ChapterListData.HasLevelExplored(battleData.id)
+
+    local s = (star[1] and 1 or 0)*100 + (star[2] and 1 or 0)*10 + (star[3] and 1 or 0)
+    if _ui.sceneManager:RequestEscapeBattle(battleData.id,false,gameWin,s, battleData.time - leftSecond,function(typeId, data) 
+        local msg = BattleMsg_pb.MsgBattleEndResponse()
+        msg:ParseFromString(data)
+        if msg.code == ReturnCode_pb.Code_OK then
+            GUIMgr:SendDataReport("reward", "battle end:" ..battleData.id, "".. MoneyListData.ComputeDiamond(msg.fresh.money.money))
+            WinLose.SetBattleId(battleData.id)
+            WinLose.SetBattleRewards(msg)	
+            if not ChapterListData.HasLevelExplored(battleData.id) then
+                UnlockArmyData.RequestData() 
+            end
+            ChapterListData.UpdateChapterData(msg.chapter)
+            if battleData.id ~= 90001 and not chapterCompleted and ChapterListData.HasChapterCompleted(chapterData) then
+                SandSelect.SetCompletedChapter(chapterData.id , chapterData.type)
+            end
+            WinLose.Show()
+
+            --send win/lose data report-------------
+            if gameWin then 
+                GUIMgr:SendDataReport("level", "" .. battleData.id, "completed", "" .. starCount)
+                if not levelExplored then
+                    exploredLevel = battleData.id
+                end
+            else
+                --valueParam["result"] = "failed"
+                GUIMgr:SendDataReport("level", "" .. battleData.id, "failed", "0")
+            end
+            -----------------------------------------
+        else
+            Global.ShowError(msg.code)
+        end
+    end) then
+        return
+    end
+
+
+
+    local req = BattleMsg_pb.MsgBattleEndRequest()
+    req.chapterlevel = battleData.id
+    for _, v in ipairs(star) do
+        req.star:append(v)
+    end
+    req.escape = false
+    req.win = gameWin
+    req.battleTime = battleData.time - leftSecond
+    LuaNetwork.Request(Category_pb.Battle, BattleMsg_pb.BattleTypeId.MsgBattleEndRequest, req:SerializeToString(), function(typeId, data)
+        local msg = BattleMsg_pb.MsgBattleEndResponse()
+        msg:ParseFromString(data)
+        if msg.code == ReturnCode_pb.Code_OK then
+            GUIMgr:SendDataReport("reward", "battle end:" ..battleData.id, "".. MoneyListData.ComputeDiamond(msg.fresh.money.money))
+            WinLose.SetBattleId(battleData.id)
+            WinLose.SetBattleRewards(msg)	
+            if not ChapterListData.HasLevelExplored(battleData.id) then
+                UnlockArmyData.RequestData() 
+            end
+            ChapterListData.UpdateChapterData(msg.chapter)
+            if battleData.id ~= 90001 and not chapterCompleted and ChapterListData.HasChapterCompleted(chapterData) then
+                SandSelect.SetCompletedChapter(chapterData.id, chapterData.type)
+            end
+            if not levelExplored then
+                exploredLevel = battleData.id
+            end
+            WinLose.Show()
+
+            --send win/lose data report-------------
+            if gameWin then 
+                GUIMgr:SendDataReport("level", "" .. battleData.id, "completed", "" .. starCount)
+            else
+                --valueParam["result"] = "failed"
+                GUIMgr:SendDataReport("level", "" .. battleData.id, "failed", "0")
+            end
+            -----------------------------------------
+        else
+            Global.ShowError(msg.code)
+        end
+
+    end, true)
+end
+
+local function OnGameOver()
+    local gameWin = _ui.sceneManager.GameWin
+    EndGame(gameWin)
+end
+
+function Win(star)
+    for i = 1, star do
+        _ui.missionList.list[i].check.gameObject:SetActive(true)
+    end
+    _ui.sceneManager.GameWin = star > 0
+    EndGame(star == 0 and false or true)
+end
+
+local function OnPlayerInfo(playerInfo)
+    SetCurrentBullet(playerInfo.currentBullet, false)
+    SetCurrentEnergy(playerInfo.currentEnergy, false)
+    maxPopulation = playerInfo.maxPopulation
+    SetCurrentPopulation(playerInfo.currentPopulation, false)
+    _ui.unlockArmyObject = nil
+    _ui.unlockHeroObject = nil
+    local unlockArmyId
+    local unlockHeroId
+    if not ChapterListData.HasLevelExplored(battleData.id) and battleData.unlock ~= "NA" then
+        local unlockList = string.split(battleData.unlock, ",")
+        if unlockList[1] == "1" then
+            unlockArmyId = tonumber(unlockList[2])
+        elseif unlockList[1] == "2" then
+            unlockHeroId = tonumber(unlockList[2])
+        end
+    end
+    local armyColorList = {"g", "b", "v", "o"}
+    local armyInfoList = playerInfo.armyInfoList
+    for i = 1, armyInfoList.Count do
+        local armyInfo = armyInfoList:get_Item(i - 1)
+        local groupData = TableMgr:GetGroupData(armyInfo.groupDataId)
+        local unitData = TableMgr:GetUnitData(armyInfo.unitDataId)
+
+        local army = _ui.armyList[i]
+        local armyLevel = unitData._unitArmyLevel
+        army.btn.normalSprite = "btn_soldier_" .. armyColorList[armyLevel]
+        army.groupData = groupData
+        army.unitData = unitData
+        army.name = TextUtil.GetUnitName(unitData)
+        army.description = TextUtil.GetUnitDescription(unitData)
+        army.totalCooldown = armyInfo.totalCooldown
+        army.cooldown = armyInfo.cooldown
+
+        army.icon.mainTexture = ResourceLibrary:GetIcon("Icon/Unit/", unitData._unitIcon)
+        army.populationCost = groupData._UnitGroupNum * unitData._unitPopulation
+        army.lbPopulation1.text = army.populationCost 
+        army.lbPopulation2.text = army.populationCost 
+        army.bulletCost = groupData._UnitGroupNum * unitData._unitNeedBullet
+        army.lbBullet1.text = army.bulletCost
+        army.lbBullet2.text = army.bulletCost
+        army.ready = true
+        army.bg.gameObject:SetActive(armyInfo.unitDataId ~= unlockArmyId)
+        if armyInfo.unitDataId == unlockArmyId then
+            _ui.unlockArmyObject = army.bg.gameObject
+            army.bg.gameObject:SetActive(false)
+        else
+            army.bg.gameObject:SetActive(true)
+        end
+        army.prefab = ResourceLibrary:GetLevelUnitInstanceFromPool(unitData._unitPrefab, unitData._unitType)
+        army.prefab.transform:SetParent(_ui.sceneManager.LevelRoot)
+        local csUnit = army.prefab:GetComponent("Clishow.CsUnit")
+        csUnit:InitUnit(unitData._unitType < 100 and 1 or 2)
+        army.anim = csUnit.Anim
+        army.prefab.gameObject:SetActive(false)
+        army.anim:GetClip("born"):SampleAnimation(army.anim.gameObject, 0)
+
+
+        _ui.bonusList[i] =AttributeBonus.CalUnitBonus(army.unitData.id)
+        if battleData.suppress == 1 and  _ui.bonusList[i] ~= nil then
+            _ui.bonusList[i].WeaponDamageBonus = _ui.bonusList[i].WeaponDamageBonus*AttributeBonus.GetPveBattleFightBonus(TeamData.GetTeamPower(Common_pb.BattleTeamType_Main)/battleData.fight)
+        end
+
+    end
+    for i = armyInfoList.Count + 1, 4 do
+        local army = _ui.armyList[i]
+        army.bg.gameObject:SetActive(false)
+    end
+
+    UpdateArmyList(0)
+
+    _ui.skillInfoList = playerInfo.skillInfoList
+    local maxSkillCount = math.min(MaxHeroCount, _ui.skillInfoList.Count)
+    for i = 1, maxSkillCount do
+        local skillInfo = _ui.skillInfoList:get_Item(i - 1)
+        local skillData = TableMgr:GetGodSkillData(skillInfo.skillDataId)
+
+        local skill = _ui.skillList[i]
+        skill.heroData = TableMgr:GetHeroData(skillInfo.heroId)
+        skill.btn.normalSprite = HeroInfo.GetSkillSpriteNameByHeroQuality(skill.heroData.quality)
+        Global.SetNumber(skill.starList, skillInfo.skillLevel)
+        skill.data = skillData
+        skill.name = TextMgr:GetText(skillData.name)
+        skill.description = TextMgr:GetText(skillData.description)
+        skill.totalCooldown = skillInfo.totalCooldown
+        skill.cooldown = skillInfo.cooldown
+
+        skill.icon.mainTexture = ResourceLibrary:GetIcon("Icon/Skill/", skillData.iconId)
+        skill.energyCost = skillData.cost
+        skill.lbEnergy1.text = skill.energyCost
+        skill.lbEnergy2.text = skill.energyCost
+        skill.costIncrease = skillData.costIncrease
+        if skillInfo.heroId == unlockHeroId then
+            _ui.unlockHeroObject = skill.bg.gameObject
+            skill.bg.gameObject:SetActive(false)
+        else
+            skill.bg.gameObject:SetActive(true)
+        end
+        skill.ready = true
+        skill.maskType = skillData.maskType
+        skill.prefab = ResourceLibrary:GetEffectInstanceFromPool(skillData.prefab)
+        skill.prefab.transform:SetParent(_ui.sceneManager.LevelRoot)
+        skill.prefab.gameObject:SetActive(false)
+    end
+    for i = maxSkillCount + 1, MaxHeroCount do
+        local skill = _ui.skillList[i]
+        skill.bg.gameObject:SetActive(false)
+    end
+    UpdateSkillList(0)
+
+    _ui.sceneManager:SetTeamCoef(1,AttributeBonus.CalCoefBonus())
+
+    if Tutorial.IsAuto() then
+        Win(3)
+    end
+end
+
+local function InitBattleCamera()
+    local cameraTransform = _ui.mainCamera.transform
+    local levelData = _ui.sceneManager.gScRoots.LevelData
+    local pos = cameraTransform.localPosition
+    local minX = levelData.MinCameraX
+    local maxX = levelData.MaxCameraX
+    local minY = levelData.MinCameraY
+    local maxY = levelData.MaxCameraY
+    local minZ = levelData.MinCameraZ
+    local maxZ = levelData.MaxCameraZ
+    local cameraX = Mathf.Clamp(battleData.cameraX, minX, maxX)
+    local cameraY = Mathf.Clamp(pos.y, minY, maxY)
+    local cameraZ = Mathf.Clamp(battleData.cameraZ, minZ, maxZ)
+    cameraTransform.localPosition = Vector3(cameraX, cameraY, cameraZ)
+    if _ui.scUnitMgr ~= nil then
+        attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+        if attackDir.x >0 then
+            _ui.battleCamera = BattleCamera(_ui.mainCamera, maxX, minX,  minY, maxY, minZ, maxZ)
+        else
+            _ui.battleCamera = BattleCamera(_ui.mainCamera, minX, maxX, minY, maxY, minZ, maxZ)
+        end
+    else
+        _ui.battleCamera = BattleCamera(_ui.mainCamera, minX, maxX, minY, maxY, minZ, maxZ)
+    end
+
+end
+
+local function CloseMissionList(delay)
+    _ui.missionList.openBtn:SetActive(false)
+    local len = _ui.missionList.tweenerList.Length
+    for i = 1, len do
+        _ui.missionList.tweenerList[i - 1].delay = delay
+        _ui.missionList.tweenerList[i - 1]:PlayForward(true)
+        _ui.missionList.tweenerList[i - 1]:SetOnFinished(EventDelegate.Callback(function()
+            _ui.missionList.openBtn:SetActive(true)
+            _ui.missionList.tweenerList[i - 1]:ClearOnFinished()
+        end))
+    end
+end
+
+local function OpenMissionList()
+    _ui.missionList.openBtn:SetActive(false)
+    local len = _ui.missionList.tweenerList.Length
+    for i = 1, len do
+        _ui.missionList.tweenerList[i - 1].delay = 0
+        _ui.missionList.tweenerList[i - 1]:PlayReverse(true)
+        _ui.missionList.tweenerList[i - 1]:SetOnFinished(EventDelegate.Callback(function()
+            CloseMissionList(5)
+        end))
+    end
+end
+
+function PlayTitle()
+    Hide()
+    if battleData.beginText == 1 then
+        _ui.bgMission.gameObject:SetActive(true)
+    else
+        _ui.bgMission.gameObject:SetActive(false)
+    end
+    _ui.btnSkip.gameObject:SetActive(true)
+    local starConditionId = battleData.starCondition1
+    local starConditionData = TableMgr:GetStarConditionData(starConditionId)
+    if starConditionData ~= nil then
+        _ui.labelMission.text = TextMgr:GetText(starConditionData.description)
+    end
+    local animClip = ResourceLibrary:GetLevelAnimationClipInstance(chapterData.stringId, battleData.titleCameraAnimation)
+    local controller = ResourceLibrary:GetLevelAnimatorControllerInstance("TitleCamera")
+    if animClip ~= nil then
+        _ui.battleCamera = nil
+        local animator = _ui.mainCamera.transform:GetComponent("Animator")
+        if animmator == nil then
+            animator = _ui.mainCamera.gameObject:AddComponent(typeof(UnityEngine.Animator))
+        end
+        local overrideController = UnityEngine.AnimatorOverrideController()
+        overrideController.name = "TitleCamera"
+        overrideController.runtimeAnimatorController = controller
+        overrideController:set_Item(overrideController.clips[0].originalClip, animClip)
+        animator.runtimeAnimatorController = nil
+        animator.runtimeAnimatorController = overrideController
+        animator.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime
+        Pause()
+
+        local coroutine = coroutine.start(function()
+            WaitForRealSeconds(animClip.length - 2)
+            if _ui == nil then
+                return
+            end
+            iTween.CameraFadeAdd()
+            iTween.CameraFadeTo(iTween.Hash("amount", 0.5, "time", 2, "ignoretimescale", true))
+            WaitForRealSeconds(2)
+            if _ui == nil then
+                return
+            end
+            InitBattleCamera()
+            iTween.CameraFadeTo(iTween.Hash("amount", 0, "time", 2, "ignoretimescale", true))
+            WaitForRealSeconds(2)
+            if _ui == nil then
+                return
+            end
+            if not PVPUI.IsPVP() then
+                Resume()
+                _ui.csBattle:NotifyTitleFinished()
+            else
+                PVPUI.RequestPVPClientReady()
+            end
+        end)
+
+        _ui.title = {}
+        _ui.title.cameraAnimator = animator
+        _ui.title.coroutine = coroutine
+    else
+        if not PVPUI.IsPVP() then
+            _ui.csBattle:NotifyTitleFinished()
+        else
+            PVPUI.RequestPVPClientReady()
+        end
+    end
+end
+
+local function MissionUpdateCallback(index, result, trace)
+    local mission = _ui.missionList.list[index]
+    mission.check.gameObject:SetActive(result == 1)
+    mission.cross.gameObject:SetActive(result == -1)
+    mission.description.text = trace
+end
+
+function GetBattleData()
+    return battleData
+end
+
+local function OnBattleInfo(battleInfo)
+    battleData = TableMgr:GetBattleData(battleInfo.battleDataId)
+    chapterData = TableMgr:GetChapterData(battleData.chapterId)
+    SetLeftSecond(battleInfo.leftSecond)
+    _ui.title = nil
+    if battleInfo.status == Serclimax.Battle.ScBattleStatus.Title then
+        if battleData.preBattle == 0 then
+            PlayTitle()
+        else
+            InitBattleCamera()
+            _ui.csBattle:NotifyTitleFinished()
+        end
+        isPlayTitle = true
+    else
+        Show()
+    end
+    QuestList.Clear()
+    QuestList.AddQuest(1, battleData.starCondition1, MissionUpdateCallback)
+    QuestList.AddQuest(2, battleData.starCondition2, MissionUpdateCallback)
+    QuestList.AddQuest(3, battleData.starCondition3, MissionUpdateCallback)
+end
+
+local function OnBattleStatus(battleStatus)
+    if battleStatus.status == Serclimax.Battle.ScBattleStatus.InProgress then
+        if _ui.battleCamera == nil then
+            InitBattleCamera()
+        end
+        if _ui.title ~= nil then
+            _ui.title.cameraAnimator.enabled = false;
+            coroutine.stop(_ui.title.coroutine)
+            iTween.CameraFadeDestroy()
+        end
+        Show()
+        _ui.btnSkip.gameObject:SetActive(false)
+        _ui.bgMission.gameObject:SetActive(false)
+        if battleData.beginText == 1 then
+            _ui.missionList.bg.gameObject:SetActive(true)
+            CloseMissionList(5)
+            _ui.bgStart.gameObject:SetActive(true)
+        else
+            _ui.missionList.bg.gameObject:SetActive(false)
+        end
+    end
+end
+
+local function OnBattleUpdate(battleInfo)
+    SetLeftSecond(battleInfo.leftSecond)
+    QuestList.SetGameTime(battleData.time - battleInfo.leftSecond)
+end
+
+local function ShowDropItem(worldPos, itemId, itemCount)
+    worldPos = worldPos + Vector3(Random.Range(-15, 15) * 0.1, 0, Random.Range(-15, 15) * 0.1)
+    if itemId == 800 then
+        local dropTransform = GameObject.Instantiate(_ui.droppingBulletPrefab).transform:Find("Bullet1")
+        local bulletCount = dropTransform:Find("text_bullet"):GetComponent("UILabel")
+        bulletCount.text = itemCount
+        local dropAnim = dropTransform:GetComponent("Animation")
+        dropTransform.parent:SetParent(_ui.bg.transform, false)
+        local localPosition = WorldToLocalPoint(worldPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+        local from = Vector3(localPosition.x, localPosition.y, 0)
+        dropTransform.parent.localPosition = from
+        GameObject.Destroy(dropTransform.parent.gameObject, dropAnim.clip.length)
+    elseif itemId == 801 then
+        local dropTransform = GameObject.Instantiate(_ui.droppingEnergyPrefab).transform:Find("Energy1")
+        local energyCount = dropTransform:Find("text_energy"):GetComponent("UILabel")
+        energyCount.text = itemCount
+        local dropAnim = dropTransform:GetComponent("Animation")
+        dropTransform.parent:SetParent(_ui.bg.transform, false)
+        local localPosition = WorldToLocalPoint(worldPos, _ui.mainCamera, _ui.uiCamera, _ui.bg.transform)
+        local from = Vector3(localPosition.x, localPosition.y, 0)
+        dropTransform.parent.localPosition = from
+        GameObject.Destroy(dropTransform.parent.gameObject, dropAnim.clip.length)
+    end
+end
+
+local function OnBattleDrop(dropInfoMsg)
+    local dropPos = dropInfoMsg.dropPos
+    local itemList = dropInfoMsg.itemList
+    for i = 1, itemList.Count do
+        local dropItem = itemList:get_Item(i - 1)
+        ShowDropItem(dropPos, dropItem.id, dropItem.count)
+    end
+end
+
+local function OnPlayerUpdate(msg)
+    SetCurrentBullet(msg.currentBullet)
+end
+
+local function OnDropUpdate(msg)
+    SetCurrentBullet(msg.currentBullet, true)
+    SetCurrentEnergy(msg.currentEnergy, true)
+    SetMaxPopulation(msg.maxPopulation)
+end
+
+local function OnCastSkill(msg)
+    SetCurrentEnergy(msg.currentEnergy, false)
+    local updateInfoList = msg.updateInfoList
+    local maxSkillCount = math.min(updateInfoList.Count, MaxHeroCount)
+    for i = 1, maxSkillCount do
+        local updateInfo = updateInfoList:get_Item(i - 1)
+        local skillIndex = updateInfo.skillIndex
+        local cooldown = updateInfo.cooldown
+        local totalCooldown = updateInfo.totalCooldown
+        local skillInfo = _ui.skillInfoList:get_Item(skillIndex)
+        local skillData = TableMgr:GetGodSkillData(skillInfo.skillDataId)
+
+        local skill = _ui.skillList[i]
+        skill.data = skillData
+        skill.totalCooldown = totalCooldown
+        skill.cooldown = cooldown
+
+        skill.icon.mainTexture = ResourceLibrary:GetIcon("Icon/Skill/", skillData.iconId)
+        skill.energyCost = skillData.cost
+        skill.lbEnergy1.text = skill.energyCost
+        skill.lbEnergy2.text = skill.energyCost
+        skill.costIncrease = skillData.costIncrease
+        skill.ready = true
+
+        if i - 1 == msg.castIndex then
+            QuestList.IncreaseUseSkillCount(skillData.type)
+        end
+    end
+    UpdateSkillList(0)
+end
+
+local function InitArmyList()
+    for i = 1, 4 do
+        local army = Army:New()
+        army.bg = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)", i))
+        army.btn = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier", i)):GetComponent("UIButton")
+        army.box = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/Box", i))
+        army.uiAnim = UIAnim:New(army.btn:GetComponent("Animation"))
+        SetPressCallback(army.btn.gameObject, ArmyPressCallback)
+        SetDragCallback(army.btn.gameObject, ArmyDragCallback)
+        SetDragOverCallback(army.btn.gameObject, ArmyDragOverCallback)
+        SetDragOutCallback(army.btn.gameObject, ArmyDragOutCallback)
+        SetDragEndCallback(army.btn.gameObject, ArmyDragEndCallback)
+        SetTooltipCallback(army.btn.gameObject, ArmyTooltipCallback)
+        SetTooltipCallback(army.box.gameObject, ArmyTooltipCallback)
+        army.icon = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_soldier", i)):GetComponent("UITexture")
+        army.mask = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/mask", i)):GetComponent("UISprite")
+        army.selected = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/selected", i)):GetComponent("UISprite")
+
+        army.iconPopulation1 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_human", i)):GetComponent("UISprite")
+        army.lbPopulation1 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_human/num_human", i)):GetComponent("UILabel")
+        army.iconPopulation2 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_human_hui", i)):GetComponent("UISprite")
+        army.lbPopulation2 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_human_hui/num_human", i)):GetComponent("UILabel")
+
+        army.iconBullet1 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_bullet", i)):GetComponent("UISprite")
+        army.lbBullet1 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_bullet/num_bullet", i)):GetComponent("UILabel")
+        army.iconBullet2 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_bullet_hui", i)):GetComponent("UISprite")
+        army.lbBullet2 = transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/icon_bullet_hui/num_bullet", i)):GetComponent("UILabel")
+        local shineAnim =  transform:Find(string.format("Container/SoldierBar/root_soldier (%d)/btn_soldier/Shine/Animation", i))
+        army.animShine = UIAnim:New(shineAnim:GetComponent("Animation"))
+
+        army.btn.gameObject.name = i
+        army.box.gameObject.name = i
+
+        _ui.armyList[i] = army
+    end
+end
+
+local function InitSkillList()
+    for i = 1, MaxHeroCount do
+        local skill = Skill:New()
+        skill.bg = transform:Find(string.format("Container/SkillBar/root_skill (%d)", i))
+        skill.btn = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill", i)):GetComponent("UIButton")
+        local starTransform = skill.btn.transform:Find("star")
+        local starList = {}
+        for j = 1, 6 do
+            starList[j] = starTransform:GetChild(j - 1)
+        end
+        skill.starList = starList
+        skill.box = transform:Find(string.format("Container/SkillBar/root_skill (%d)/Box", i))
+        skill.uiAnim = UIAnim:New(skill.btn:GetComponent("Animation"))
+        SetPressCallback(skill.btn.gameObject, SkillPressCallback)
+        SetDragCallback(skill.btn.gameObject, SkillDragCallback)
+        SetDragStartCallback(skill.btn.gameObject, SkillDragStartCallback)
+        SetDragOverCallback(skill.btn.gameObject, SkillDragOverCallback)
+        SetDragOutCallback(skill.btn.gameObject, SkillDragOutCallback)
+        SetDragEndCallback(skill.btn.gameObject, SkillDragEndCallback)
+        SetTooltipCallback(skill.btn.gameObject, SkillTooltipCallback)
+        SetTooltipCallback(skill.box.gameObject, SkillTooltipCallback)
+        skill.icon = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/icon_skill", i)):GetComponent("UITexture")
+        skill.mask = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/mask", i)):GetComponent("UISprite")
+        skill.cdLabel = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/mask/CD", i)):GetComponent("UILabel")
+        skill.selected = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/selected", i)):GetComponent("UISprite")
+
+        skill.iconEnergy1 = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/icon_energy", i)):GetComponent("UISprite")
+        skill.lbEnergy1 = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/icon_energy/num_energy", i)):GetComponent("UILabel")
+        skill.iconEnergy2 = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/icon_energy_hui", i)):GetComponent("UISprite")
+        skill.lbEnergy2 = transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/icon_energy_hui/num_energy", i)):GetComponent("UILabel")
+        local shineAnim =  transform:Find(string.format("Container/SkillBar/root_skill (%d)/btn_skill/Shine/Animation", i))
+        skill.animShine = UIAnim:New(shineAnim:GetComponent("Animation"))
+
+        skill.btn.gameObject.name = i
+        skill.box.gameObject.name = i
+        _ui.skillList[i] = skill
+    end
+
+end
+
+function InitMissionList()
+    _ui.missionList = {}
+    _ui.missionList.bg = transform:Find("MissionObj")
+    _ui.missionList.openBtn = transform:Find("MissionObj/btn_jiantou_open").gameObject
+    _ui.missionList.closeBtn = transform:Find("MissionObj/bg/btn_jiantou_close").gameObject
+    _ui.missionList.list = {}
+    _ui.missionList.tweenerList = transform:Find("MissionObj/bg"):GetComponents(typeof(UITweener))
+
+    for i = 1, 3 do
+        local mission = Mission()
+        mission.check = transform:Find(string.format("MissionObj/bg/frane_gouxuan (%d)/icon_gou", i)).gameObject
+        mission.cross = transform:Find(string.format("MissionObj/bg/frane_gouxuan (%d)/icon_cha", i)).gameObject
+        mission.description = transform:Find(string.format("MissionObj/bg/frane_gouxuan (%d)/text_miaosu", i)):GetComponent("UILabel")
+        _ui.missionList.list[i] = mission
+        mission.check.gameObject:SetActive(false)
+        mission.cross.gameObject:SetActive(false)
+    end
+
+    SetClickCallback(_ui.missionList.openBtn, function(go)
+        OpenMissionList()
+    end)
+
+    SetClickCallback(_ui.missionList.closeBtn, function(go)
+        CloseMissionList(0)
+    end)
+end
+
+local function InitDelegate()
+    AddDelegate(_ui.csUnitMgr, "onUnitCreated", OnUnitCreated)
+    AddDelegate(_ui.csUnitMgr, "onUnitRemoved", OnUnitRemoved)
+    AddDelegate(_ui.sceneManager, "onSceneLoadFinished", OnSceneLoadFinished)
+    AddDelegate(_ui.sceneManager, "onGameOver", OnGameOver)
+    AddDelegate(_ui.csBattle, "onBattleInfo", OnBattleInfo)
+    AddDelegate(_ui.csBattle, "onPlayerInfo", OnPlayerInfo)
+    AddDelegate(_ui.csBattle, "onBattleStatus", OnBattleStatus)
+    AddDelegate(_ui.csBattle, "onBattleUpdate", OnBattleUpdate)
+    AddDelegate(_ui.csBattle, "onBattleDrop", OnBattleDrop)
+    AddDelegate(_ui.csBattle, "onPlayerUpdate", OnPlayerUpdate)
+    AddDelegate(_ui.csBattle, "onDropUpdate", OnDropUpdate)
+    AddDelegate(_ui.csBattle, "onCastSkill", OnCastSkill)
+end
+
+local function ReleaseDelegate()
+    RemoveDelegate(_ui.csUnitMgr, "onUnitCreated", OnUnitCreated)
+    RemoveDelegate(_ui.csUnitMgr, "onUnitRemoved", OnUnitRemoved)
+    RemoveDelegate(_ui.sceneManager, "onSceneLoadFinished", OnSceneLoadFinished)
+    RemoveDelegate(_ui.sceneManager, "onGameOver", OnGameOver)
+    RemoveDelegate(_ui.csBattle, "onBattleInfo", OnBattleInfo)
+    RemoveDelegate(_ui.csBattle, "onPlayerInfo", OnPlayerInfo)
+    RemoveDelegate(_ui.csBattle, "onBattleStatus", OnBattleStatus)
+    RemoveDelegate(_ui.csBattle, "onBattleUpdate", OnBattleUpdate)
+    RemoveDelegate(_ui.csBattle, "onBattleDrop", OnBattleDrop)
+    RemoveDelegate(_ui.csBattle, "onPlayerUpdate", OnPlayerUpdate)
+    RemoveDelegate(_ui.csBattle, "onDropUpdate", OnDropUpdate)
+    RemoveDelegate(_ui.csBattle, "onCastSkill", OnCastSkill)
+end
+
+local function InitDroppingPrefab()
+    _ui.droppingBulletPrefab = ResourceLibrary.GetInGamePrefab("Bullet")
+    _ui.droppingEnergyPrefab = ResourceLibrary.GetInGamePrefab("Energy")
+    _ui.fireAreaPrefab = ResourceLibrary.GetInGamePrefab("FirePoint")
+    _ui.fireNoticePrefab = ResourceLibrary.GetInGamePrefab("FirePoint_base")
+end
+
+local function InitCameraValue()
+    _ui.MaxCameraAheadOfFireLine = tonumber(TableMgr:GetGlobalData(DataEnum.ScGlobalDataId.MaxCameraAheadOfFireLine).value)
+    _ui.CameraFollowFireLineDelay = tonumber(TableMgr:GetGlobalData(DataEnum.ScGlobalDataId.CameraFollowFireLineDelay).value)
+    _ui.TriggerCameraFollowFireLineOffset = tonumber(TableMgr:GetGlobalData(DataEnum.ScGlobalDataId.TriggerCameraFollowFireLineOffset).value)
+    _ui.CameraFollowFireLineOffset = tonumber(TableMgr:GetGlobalData(DataEnum.ScGlobalDataId.CameraFollowFireLineOffset).value)
+
+    cameraFollowingFireLine = true
+    cameraFollowTimer = 0
+end
+
+local function CheckUnlockArmy(unlockedList)
+    SoldierUnlock.UnlockArmy(unlockedList)
+end
+
+function Awake()
+    _ui = {}
+    _ui.skillEffect = {}
+    MaxHeroCount = Serclimax.Player.ScPlayer.MaxHeroCount
+    _ui.uiCamera = GUIMgr.UIRoot.transform:Find("Camera"):GetComponent("Camera")
+    _ui.gamestateBattle = GGameStateBattle
+    _ui.sceneManager = SceneManager.instance
+    _ui.csUnitMgr = Clishow.CsUnitMgr.Instance
+    _ui.csBattle = Clishow.CsBattle.Instance
+    currentBullet = 0
+    currentEnergy = 0
+    currentPopulation = 0
+    maxPopulation = 0
+    _ui.armyList = {}
+    _ui.skillList = {}
+    _ui.armyList.selectedIndex = 0
+    _ui.skillList.selectedIndex = 0
+    _ui.constructsMask = LayerMask.GetMask("constructs")
+    _ui.groundMask = LayerMask.GetMask("ground")
+    _ui.otherMask = LayerMask.GetMask("Default")
+    _ui.groundPlane = Plane.New(Vector3.up, 0)
+    _ui.battleCamera = nil
+    enableCameraDrag = true
+    enableCameraPinch = true
+    AudioMgr:ResumeSfx()
+
+    _ui.fireLine = _ui.sceneManager:GetFireline()
+    _ui.fireLine:SetActive(false)
+
+    --初始化控件
+    _ui.bg = transform:Find("Container"):GetComponent("UIWidget")
+    SetPressCallback(_ui.bg.gameObject, BgPressCallback)
+    _ui.fg = transform:Find("PanelBox"):GetComponent("UIWidget")
+    _ui.bgMission = transform:Find("bg_mission")
+    _ui.bgMission:GetComponent("UITweener"):SetOnFinished(EventDelegate.Callback(function()
+        _ui.bgMission.gameObject:SetActive(false)
+    end))
+    _ui.labelMission = transform:Find("bg_mission/text_miaosu"):GetComponent("UILabel")
+    _ui.bgStart = transform:Find("bg_start")
+
+    _ui.bullet = {}
+    _ui.bullet.label = transform:Find("Container/TopBar/bg_bar/root_bullet/text_bullet"):GetComponent("UILabel")
+    local bulletAnim = transform:Find("Container/TopBar/bg_bar/root_bullet"):GetComponent("Animation")
+    _ui.bullet.greenAnim = UIAnim:New(bulletAnim, "bullet_green")
+
+    _ui.energy = {}
+    _ui.energy.root = transform:Find("Container/TopBar/bg_bar/root_energy")
+    _ui.energy.label = transform:Find("Container/TopBar/bg_bar/root_energy/text_energy"):GetComponent("UILabel")
+    local energyAnim = transform:Find("Container/TopBar/bg_bar/root_energy"):GetComponent("Animation")
+    _ui.energy.greenAnim = UIAnim:New(energyAnim, "energy_green")
+
+    _ui.population = {}
+    _ui.population.label = transform:Find("Container/TopBar/bg_bar/root_human/text_human"):GetComponent("UILabel")
+    local populationAnim = transform:Find("Container/TopBar/bg_bar/root_human/"):GetComponent("Animation")
+    _ui.population.redAnim = UIAnim:New(populationAnim, "human_red")
+
+    _ui.lbTime = transform:Find("Container/Time"):GetComponent("UILabel")
+
+    _ui.btnRetreat = transform:Find("Container/Btn_retreat"):GetComponent("UIButton")
+    _ui.btnSkip = transform:Find("Btn_skip"):GetComponent("UIButton")
+    SetPressCallback(_ui.btnRetreat.gameObject, RetreatPressCallback)
+    SetClickCallback(_ui.btnSkip.gameObject, SkipClickCallback)
+
+    InitMissionList()
+
+    InitArmyList()
+
+    _ui.panel_hud = transform:Find("panel_hud")
+
+    eventCDs = {}
+    _ui.eventCD = transform:Find("panel_hud")
+    _ui.eventCDPrefab = ResourceLibrary.GetUIPrefab("Hud/TimeCD")
+
+    InitSkillList()
+    _ui.prohibit = transform:Find("Container/Prohibit")
+
+    InitDroppingPrefab()
+
+    InitDelegate()
+
+    InitCameraValue()
+
+    local fireAreaRadius = tonumber(TableMgr:GetGlobalData(DataEnum.ScGlobalDataId.FireAreaRadius).value)
+    FireAreaRadiusSqr = fireAreaRadius * fireAreaRadius
+    _ui.fireAreaList = {}
+    _ui.fireNoticeList = {}
+    baseLowHPList = {}
+    npcLowHPList = {}
+
+    _ui.btnSkip.gameObject:SetActive(false)
+    _ui.missionList.bg.gameObject:SetActive(false)
+    _ui.bgMission.gameObject:SetActive(false)
+    _ui.bgStart.gameObject:SetActive(false)
+    _ui.fg.gameObject:SetActive(false)
+
+    local baseGuideInfoData = TableMgr:GetGuideInfoData(attackedGuideId)
+    if baseGuideInfoData ~= nil then
+        attackedGuideBattleId = tonumber(baseGuideInfoData._guide_resparam)
+    end
+
+    _ui.skillEffect.bg = transform:Find("SkillEffect")
+    _ui.skillEffect.heroIcon = transform:Find("SkillEffect/Animations/Gerneral"):GetComponent("UITexture")
+
+    _ui.bonusList = {}
+
+    UnlockArmyData.AddListener(CheckUnlockArmy)	
+    _ui.warnText = transform:Find("bg_warn").gameObject
+    _ui.warnKuang = transform:Find("AlertRkuag").gameObject
+    RadarData.AddListener(RadarListener)
+end
+
+function Start()
+    AddDelegate(UICamera, "onDrag", OnUICameraDrag)
+end
+
+function Close()
+    ReleaseDelegate()
+    RemoveDelegate(UICamera, "onDrag", OnUICameraDrag)
+    UnlockArmyData.RemoveListener(CheckUnlockArmy)
+    RadarData.RemoveListener(RadarListener)
+    iTween.CameraFadeDestroy()
+    _ui = nil
+    eventCDs = nil
+end
+
+local function UpdateFireAreaList(deltaTime)
+    local index = 1
+    while index < #_ui.fireAreaList + 1 do
+        local fireArea = _ui.fireAreaList[index]
+        if fireArea:Update(deltaTime) then
+            index = index + 1
+        else
+            GameObject.Destroy(fireArea.transform.gameObject)
+            table.remove(_ui.fireAreaList, index)
+        end
+    end
+end
+
+local function UpdateFireNoticeList(deltaTime)
+    for k, v in pairs(_ui.fireNoticeList) do
+        local fireArea = _ui.fireNoticeList[k]
+        if not fireArea:Update(deltaTime) then
+            GameObject.Destroy(fireArea.transform.gameObject)
+            _ui.fireNoticeList[k] = nil
+        end
+    end
+end
+
+local function ClearFireAreaList()
+    for _, v in pairs(_ui.fireAreaList) do
+        GameObject.Destroy(v.transform.gameObject)
+    end
+    _ui.fireAreaList = {}
+end
+
+local function ClearFireNoticeList()
+    for _, v in pairs(_ui.fireNoticeList) do
+        GameObject.Destroy(v.transform.gameObject)
+    end
+    _ui.fireNoticeList = {}
+end
+
+function Update()
+    local deltaTime = Time.deltaTime
+    if not SceneManager.instance.gScRoots.GamePaused then
+        UpdateArmyList(deltaTime)
+        UpdateSkillList(deltaTime)
+        UpdateFireAreaList(deltaTime)
+        UpdateFireNoticeList(deltaTime)
+    end
+end
+
+function LateUpdate()
+    local deltaTime = Time.deltaTime
+    if _ui.battleCamera ~= nil then
+        --镜头缩放速度
+        local zoomSpeed = 0.02
+        if Controller:IsPinch() and enableCameraPinch then
+            local pinchDelta = Controller:GetPinchDelta()
+            _ui.battleCamera:Zoom(pinchDelta * zoomSpeed)
+            cameraFollowingFireLine = false
+            _ui.battleCamera:SetFollowPosition(nil)
+            cameraFollowTimer = _ui.CameraFollowFireLineDelay
+        end
+    end
+    local firePoint = _ui.scUnitMgr:GetCurrentFirePoint(0)
+    if _ui.fireLine ~= nil and _ui.fireLine.activeSelf and _ui.scUnitMgr ~= nil then
+        _ui.sceneManager:MoveFirelineTo(firePoint, false)
+    end
+
+    if _ui.battleCamera ~= nil then 
+        local attackDir = _ui.scUnitMgr:GetAttackDirection(0)
+        if cameraFollowingFireLine then
+            local fireLineMoveDirection = _ui.scUnitMgr:GetFireLineMoveDirection(0)
+
+            if fireLineMoveDirection > 0 then
+                local targetPos = firePoint - Vector3(attackDir.x, 0, attackDir.y) * _ui.CameraFollowFireLineOffset 
+                targetPos = firePoint
+                _ui.battleCamera:SetFollowPosition(targetPos)
+            end
+        else
+            if cameraFollowTimer > 0 then
+                cameraFollowTimer = cameraFollowTimer - deltaTime
+                if cameraFollowTimer <= 0 then
+                    cameraFollowingFireLine = true
+                end
+            end
+        end
+        local x = firePoint + Vector3(attackDir.x, 0, attackDir.y) * _ui.MaxCameraAheadOfFireLine
+        _ui.battleCamera:SetFireLineLimit(firePoint + Vector3(attackDir.x, 0, attackDir.y) * _ui.MaxCameraAheadOfFireLine)
+        _ui.battleCamera:Update()
+        mainTransform.position = _ui.battleCamera.transform.position + _ui.battleCamera.transform.forward * _ui.battleCamera.groundDistance
+        mainTransform.rotation = _ui.battleCamera.transform.rotation
+    end
+
+    if not isPlayTitle	then
+        for i=1 , #eventCDs , 1 do
+            local event = eventCDs[i]
+            if event.timespan > 0 and event.active then
+                local targetPos = Vector3(event.targetPos.x , event.targetPos.y , event.targetPos.z)
+
+                local localposition = WorldToLocalPoint(targetPos , _ui.mainCamera , _ui.uiCamera , _ui.eventCD)
+                local halfScreenWidth = UnityEngine.Screen.width * 0.5
+                local halfScreenHeight = UnityEngine.Screen.height * 0.5
+                local offset = 20
+
+                local clampPosY = localposition.y
+                local clampPosX = localposition.x
+                if localposition.y > halfScreenHeight then
+                    clampPosY = halfScreenHeight - offset
+                end
+                if localposition.y < -halfScreenHeight then
+                    clampPosY = -halfScreenHeight + offset
+                end 
+
+                if _ui.battleCamera:IsMaxRight() then
+                    if localposition.x < -halfScreenWidth then
+                        clampPosX = -halfScreenWidth + offset
+                    end
+                end
+
+                if _ui.battleCamera:IsMinRight() then
+                    if localposition.x > halfScreenWidth then
+                        clampPosX = halfScreenWidth - offset
+                    end
+                end
+                event.go.gameObject:SetActive(true)
+                event.go.transform.localPosition = Vector3(clampPosX , clampPosY , 0)
+                event.sprite.fillAmount = event.timespan/event.duration
+                event.timespan = event.timespan - deltaTime
+            else
+                event.go:SetActive(false)
+            end
+
+        end
+    end
+end
+
+function MoveCamera(deltaX, deltaZ)
+    if _ui.battleCamera ~= nil then
+        _ui.battleCamera:Move(deltaX, deltaZ)
+    end
+end
+
+function SetCameraFollowPosition(targetPos)
+    if _ui.battleCamera ~= nil then
+        _ui.battleCamera:SetFollowPosition(targetPos)
+    end
+end
+
+function DisableCameraFollowFireLine()
+    cameraFollowTimer = 0
+    cameraFollowingFireLine = false
+end
+
+function EnableCameraFollowFireLine(reset)
+    cameraFollowingFireLine = true
+    cameraFollowTimer = reset and _ui.CameraFollowFireLineDelay or 0
+end
+
+function DisableUI()
+    _ui.fg.gameObject:SetActive(true)
+end
+
+function EnableUI()
+    _ui.fg.gameObject:SetActive(false)
+end
+
+function FadeOutUI()
+    ClearFireAreaList()
+    ClearFireNoticeList()
+    local gameWin = _ui.sceneManager.GameWin
+    QuestList.SetGameWin(gameWin)
+    UITweener.PlayAllTweener(_ui.bg.gameObject, true, false, false)
+end
+
+function SetEnableCameraDrag(enable)
+    enableCameraDrag = enable
+end
+
+function SetEnableCameraPinch(enable)
+    enableCameraPinch = enable
+end
+
+function ShowIngameHint(hint)
+    --print("Hint" .. hint)
+    local hintText = TextMgr:GetText(hint)
+    if hintText ~= nil then
+        local hintLabel = transform:Find("Container/Bg_hint")
+        hintLabel.gameObject:SetActive(true)
+        hintLabel:Find("txt_hint"):GetComponent("UILabel").text = hintText
+
+        local ShowTime = Serclimax.GameTime.GetSecTime() + 3
+        CountDown.Instance:Add("battlHintCD",ShowTime, function(t)
+            if t == "00:00:00" then
+                CountDown.Instance:Remove("battlHintCD")
+                ShowTime = 0
+                hintLabel.gameObject:SetActive(false)
+            end
+        end)
+
+    end
+end
+
+function UnlockArmyOrHero()
+    if _ui.unlockArmyObject ~= nil then
+        _ui.unlockArmyObject:SetActive(true)
+    end
+    if _ui.unlockHeroObject ~= nil then
+        _ui.unlockHeroObject:SetActive(true)
+    end
+end

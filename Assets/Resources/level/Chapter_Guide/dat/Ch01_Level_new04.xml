@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="Ch01_Level_demo01" sceneName="Ch01_Level_new04">
+    <LevelElements count="3">
+      <Element uniqueId="2" elementType="2" name="Sandbag4" tableId="90015500" activeWhenInitial="True" position="-11.37,0.1,2.1" rotation="0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-11.4, 0.1, 2.4)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="3" elementType="2" name="Sandbag4" tableId="90015500" activeWhenInitial="True" position="-21.02,0.1,-2.1" rotation="0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-21.0, 0.1, -1.8)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="4" elementType="2" name="Sandbag4" tableId="90015500" activeWhenInitial="True" position="-21.02,0.1,7.1" rotation="0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-21.0, 0.1, 7.4)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+    </LevelElements>
+    <PathPoints point_count="18" group_count="6" team_count="2">
+      <PathPoint uniqueId="1" group="0" position="(-15.5, 0.0, -0.1)" team="1" />
+      <PathPoint uniqueId="2" group="0" position="(-14.9, 0.0, 5.2)" team="1" />
+      <PathPoint uniqueId="3" group="0" position="(-17.1, 0.0, 3.0)" team="1" />
+      <PathPoint uniqueId="4" group="1" position="(-16.9, 0.0, -2.3)" team="1" />
+      <PathPoint uniqueId="5" group="1" position="(-15.2, 0.0, 1.6)" team="1" />
+      <PathPoint uniqueId="6" group="1" position="(-13.5, 0.0, 6.4)" team="1" />
+      <PathPoint uniqueId="7" group="2" position="(-44.3, 0.0, -1.8)" team="1" />
+      <PathPoint uniqueId="8" group="2" position="(-39.0, 0.0, 1.6)" team="1" />
+      <PathPoint uniqueId="9" group="2" position="(-40.0, 0.0, 6.6)" team="1" />
+      <PathPoint uniqueId="10" group="0" position="(-16.6, 0.0, -0.5)" team="2" />
+      <PathPoint uniqueId="11" group="0" position="(-15.4, 0.0, 2.7)" team="2" />
+      <PathPoint uniqueId="12" group="0" position="(-19.4, 0.0, 2.1)" team="2" />
+      <PathPoint uniqueId="13" group="1" position="(-7.4, 0.0, 1.6)" team="2" />
+      <PathPoint uniqueId="14" group="1" position="(-5.2, 0.0, 3.9)" team="2" />
+      <PathPoint uniqueId="15" group="1" position="(-4.3, 0.0, -1.5)" team="2" />
+      <PathPoint uniqueId="16" group="2" position="(12.4, 0.0, 0.7)" team="2" />
+      <PathPoint uniqueId="17" group="2" position="(13.7, 0.0, 3.5)" team="2" />
+      <PathPoint uniqueId="18" group="2" position="(14.5, 0.0, 5.2)" team="2" />
+      <PathGroup group="0" position="(-0.3, 0.0, 1.5)" team="1" />
+      <PathGroup group="1" position="(-14.4, 0.0, 1.6)" team="1" />
+      <PathGroup group="2" position="(-39.0, 0.0, 2.1)" team="1" />
+      <PathGroup group="0" position="(-20.0, 0.0, 0.9)" team="2" />
+      <PathGroup group="1" position="(-5.2, 0.0, 1.1)" team="2" />
+      <PathGroup group="2" position="(13.7, 0.0, 3.0)" team="2" />
+      <PathTeam team="1" tag="" />
+      <PathTeam team="2" tag="" />
+    </PathPoints>
+    <Events file="Ch01_level_new04Events" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="-16.194999,2.500000,80.000000,40.000000" Height="0" EditorWidth="80" EditorHeight="40" UID="-1" Mask="1025" />
+      <SubSpaces>
+        <Space RootRect="-11.520000,1.100000,0.500000,1.500000" Height="0.8" UID="2" />
+        <Space RootRect="-11.520000,2.600000,0.500000,1.500000" Height="0.8" UID="2" />
+        <Space RootRect="-21.170000,-2.349999,0.500000,3.000000" Height="0.8" UID="3" />
+        <Space RootRect="-21.170000,6.600000,0.500000,2.500000" Height="0.8" UID="4" />
+        <Space RootRect="-21.170000,8.100000,0.500000,0.500000" Height="0.8" UID="4" />
+      </SubSpaces>
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="Ch01_Level_new04_path" count="0" minCameraX="-24" maxCameraX="-4" minCameraZ="24" maxCameraZ="24" minCameraY="13" maxCameraY="25" />
+    <BattleLine>
+      <BattleLinePoint id="0" position="(14.3, 0.0, 0.3)" />
+      <BattleLinePoint id="100" position="(-43.2, 0.0, 1.1)" />
+      <BattleLinePoint id="999" position="(-2.6, 0.0, 1.8)" />
+    </BattleLine>
+    <Slots>
+      <Slot UID="2">
+        <Node Pos="(-12.4, 0.1, 3.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-12.4, 0.1, 0.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-12.4, 0.1, 2.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.4, 0.1, 0.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.4, 0.1, 3.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-10.4, 0.1, 2.1)" Forward="(-1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="3">
+        <Node Pos="(-22.0, 0.1, -1.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-22.0, 0.1, -3.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-22.0, 0.1, -2.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, -3.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, -1.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, -2.1)" Forward="(-1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="4">
+        <Node Pos="(-22.0, 0.1, 8.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-22.0, 0.1, 5.6)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-22.0, 0.1, 7.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, 5.6)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, 8.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-20.0, 0.1, 7.1)" Forward="(-1.0, 0.0, 0.0)" />
+      </Slot>
+    </Slots>
+    <Tracks />
+  </Map>
+</root>

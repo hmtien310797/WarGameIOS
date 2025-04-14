@@ -1,0 +1,424 @@
+fileFormatVersion: 2
+guid: ed7e6c37b2b148d408c2d6e04fb471e9
+timeCreated: 1466578898
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: Bone002
+    100004: Bone003
+    100006: Bone004
+    100008: Bone005
+    100010: Bone005(mirrored)
+    100012: Bone006
+    100014: Bone007
+    100016: Bone007(mirrored)
+    100018: Bone008
+    100020: Bone008(mirrored)
+    100022: T_tank_01
+    100024: //RootNode
+    100026: Bone009
+    100028: Bone009(mirrored)
+    100030: Bone010
+    100032: Bone010(mirrored)
+    100034: Bone011
+    100036: Bone011(mirrored)
+    100038: Bone012
+    100040: Bone012(mirrored)
+    100042: Bone013
+    100044: Bone013(mirrored)
+    100046: Bone014
+    100048: Bone014(mirrored)
+    100050: Bone015
+    100052: Bone015(mirrored)
+    100054: Bone016
+    100056: Bone016(mirrored)
+    100058: Bone017
+    100060: Bone017(mirrored)
+    100062: Bone018
+    100064: Bone018(mirrored)
+    100066: Bone019
+    100068: Bone019(mirrored)
+    100070: Bone020
+    100072: Bone020(mirrored)
+    100074: Bone021
+    100076: Bone021(mirrored)
+    100078: Bone022
+    100080: Bone022(mirrored)
+    100082: Bone023
+    100084: Bone023(mirrored)
+    100086: Bone024
+    100088: Bone024(mirrored)
+    100090: Bone025
+    100092: Bone025(mirrored)
+    100094: Bone026
+    100096: Bone026(mirrored)
+    100098: Bone027
+    100100: Bone027(mirrored)
+    100102: Bone028
+    100104: Bone028(mirrored)
+    100106: Bone029
+    100108: Bone029(mirrored)
+    100110: Bone030
+    100112: Bone030(mirrored)
+    100114: Bone031
+    100116: Bone031(mirrored)
+    100118: Bone032
+    100120: Bone032(mirrored)
+    100122: Bone033
+    100124: Bone033(mirrored)
+    100126: Bone034
+    100128: Bone034(mirrored)
+    100130: Bone035
+    100132: Bone035(mirrored)
+    100134: Bone036
+    100136: Bone036(mirrored)
+    100138: Bone037
+    100140: Bone037(mirrored)
+    100142: Bone038
+    100144: Bone038(mirrored)
+    100146: Bone039
+    100148: Bone039(mirrored)
+    100150: Bone040
+    100152: Bone040(mirrored)
+    100154: Bone041
+    100156: Bone041(mirrored)
+    100158: Bone042
+    100160: Bone042(mirrored)
+    100162: IK Chain001
+    100164: IK Chain003
+    100166: Line001
+    100168: Line002
+    100170: Object002
+    100172: Object002 1
+    100174: Point029
+    100176: Point058
+    100178: Point059
+    100180: Point060
+    100182: Point061
+    100184: Point062
+    100186: Point063
+    100188: Point064
+    100190: Point065
+    100192: Point066
+    100194: Point067
+    100196: Point068
+    100198: Point069
+    100200: Point070
+    100202: Point071
+    100204: Point072
+    100206: Point073
+    100208: Point074
+    100210: Point075
+    100212: Point076
+    100214: Point077
+    100216: Point078
+    100218: Point079
+    100220: Point080
+    100222: Point081
+    100224: Point082
+    100226: Point083
+    100228: Point084
+    100230: Point085
+    100232: Point086
+    100234: Point087
+    100236: Point088
+    100238: Point089
+    100240: Point090
+    100242: Point091
+    100244: Point092
+    100246: Point093
+    100248: Point094
+    100250: Point095
+    100252: Point096
+    100254: Point097
+    100256: Point098
+    100258: Point099
+    100260: Point100
+    100262: Point101
+    100264: Point102
+    100266: Point103
+    100268: Point104
+    100270: Point105
+    100272: Point106
+    100274: Point107
+    100276: Point108
+    100278: Point109
+    100280: Point110
+    100282: Point111
+    100284: Point112
+    100286: Point113
+    400000: Bone001
+    400002: Bone002
+    400004: Bone003
+    400006: Bone004
+    400008: Bone005
+    400010: Bone005(mirrored)
+    400012: Bone006
+    400014: Bone007
+    400016: Bone007(mirrored)
+    400018: Bone008
+    400020: Bone008(mirrored)
+    400022: T_tank_01
+    400024: //RootNode
+    400026: Bone009
+    400028: Bone009(mirrored)
+    400030: Bone010
+    400032: Bone010(mirrored)
+    400034: Bone011
+    400036: Bone011(mirrored)
+    400038: Bone012
+    400040: Bone012(mirrored)
+    400042: Bone013
+    400044: Bone013(mirrored)
+    400046: Bone014
+    400048: Bone014(mirrored)
+    400050: Bone015
+    400052: Bone015(mirrored)
+    400054: Bone016
+    400056: Bone016(mirrored)
+    400058: Bone017
+    400060: Bone017(mirrored)
+    400062: Bone018
+    400064: Bone018(mirrored)
+    400066: Bone019
+    400068: Bone019(mirrored)
+    400070: Bone020
+    400072: Bone020(mirrored)
+    400074: Bone021
+    400076: Bone021(mirrored)
+    400078: Bone022
+    400080: Bone022(mirrored)
+    400082: Bone023
+    400084: Bone023(mirrored)
+    400086: Bone024
+    400088: Bone024(mirrored)
+    400090: Bone025
+    400092: Bone025(mirrored)
+    400094: Bone026
+    400096: Bone026(mirrored)
+    400098: Bone027
+    400100: Bone027(mirrored)
+    400102: Bone028
+    400104: Bone028(mirrored)
+    400106: Bone029
+    400108: Bone029(mirrored)
+    400110: Bone030
+    400112: Bone030(mirrored)
+    400114: Bone031
+    400116: Bone031(mirrored)
+    400118: Bone032
+    400120: Bone032(mirrored)
+    400122: Bone033
+    400124: Bone033(mirrored)
+    400126: Bone034
+    400128: Bone034(mirrored)
+    400130: Bone035
+    400132: Bone035(mirrored)
+    400134: Bone036
+    400136: Bone036(mirrored)
+    400138: Bone037
+    400140: Bone037(mirrored)
+    400142: Bone038
+    400144: Bone038(mirrored)
+    400146: Bone039
+    400148: Bone039(mirrored)
+    400150: Bone040
+    400152: Bone040(mirrored)
+    400154: Bone041
+    400156: Bone041(mirrored)
+    400158: Bone042
+    400160: Bone042(mirrored)
+    400162: IK Chain001
+    400164: IK Chain003
+    400166: Line001
+    400168: Line002
+    400170: Object002
+    400172: Object002 1
+    400174: Point029
+    400176: Point058
+    400178: Point059
+    400180: Point060
+    400182: Point061
+    400184: Point062
+    400186: Point063
+    400188: Point064
+    400190: Point065
+    400192: Point066
+    400194: Point067
+    400196: Point068
+    400198: Point069
+    400200: Point070
+    400202: Point071
+    400204: Point072
+    400206: Point073
+    400208: Point074
+    400210: Point075
+    400212: Point076
+    400214: Point077
+    400216: Point078
+    400218: Point079
+    400220: Point080
+    400222: Point081
+    400224: Point082
+    400226: Point083
+    400228: Point084
+    400230: Point085
+    400232: Point086
+    400234: Point087
+    400236: Point088
+    400238: Point089
+    400240: Point090
+    400242: Point091
+    400244: Point092
+    400246: Point093
+    400248: Point094
+    400250: Point095
+    400252: Point096
+    400254: Point097
+    400256: Point098
+    400258: Point099
+    400260: Point100
+    400262: Point101
+    400264: Point102
+    400266: Point103
+    400268: Point104
+    400270: Point105
+    400272: Point106
+    400274: Point107
+    400276: Point108
+    400278: Point109
+    400280: Point110
+    400282: Point111
+    400284: Point112
+    400286: Point113
+    2300000: Line001
+    2300002: Line002
+    3300000: Line001
+    3300002: Line002
+    4300000: T_tank_01
+    4300002: Line001
+    4300004: Line002
+    7400000: fall
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: T_tank_01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: fall
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone001
+        weight: 1
+      - path: Bone001/Bone005
+        weight: 1
+      - path: Bone001/Bone005(mirrored)
+        weight: 1
+      - path: Bone001/Bone006
+        weight: 1
+      - path: Bone001/Bone006/Bone002
+        weight: 1
+      - path: Bone001/Bone006/Bone002/Bone003
+        weight: 1
+      - path: Bone001/Bone006/Bone002/Bone003/Bone004
+        weight: 1
+      - path: Bone001/Bone006/Bone007
+        weight: 1
+      - path: Bone001/Bone006/Bone007(mirrored)
+        weight: 1
+      - path: Bone001/Bone006/Bone008
+        weight: 1
+      - path: Bone001/Bone006/Bone008(mirrored)
+        weight: 1
+      - path: T_tank_01
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 2
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

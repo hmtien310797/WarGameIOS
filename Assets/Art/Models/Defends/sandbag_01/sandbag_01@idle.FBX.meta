@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: 3548d64f0b60f874fb5bd2b65aacc5bc
+timeCreated: 1469694286
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bone001
+    100002: bone002
+    100004: bone003
+    100006: bone004
+    100008: bone005
+    100010: bone006
+    100012: bone007
+    100014: bone008
+    100016: bone009
+    100018: Plane030
+    100020: sandbag_01
+    100022: //RootNode
+    100024: Object001
+    100026: Object002
+    100028: Object003
+    100030: Object004
+    100032: Object005
+    100034: Object006
+    100036: Object007
+    100038: Object008
+    100040: Bone011
+    400000: bone001
+    400002: bone002
+    400004: bone003
+    400006: bone004
+    400008: bone005
+    400010: bone006
+    400012: bone007
+    400014: bone008
+    400016: bone009
+    400018: Plane030
+    400020: sandbag_01
+    400022: //RootNode
+    400024: Object001
+    400026: Object002
+    400028: Object003
+    400030: Object004
+    400032: Object005
+    400034: Object006
+    400036: Object007
+    400038: Object008
+    400040: Bone011
+    2300000: Plane030
+    3300000: Plane030
+    4300000: sandbag_01
+    4300002: Plane030
+    4300004: Object001
+    4300006: Object002
+    4300008: Object003
+    4300010: Object004
+    4300012: Object005
+    4300014: Object006
+    4300016: Object007
+    4300018: Object008
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: sandbag_01
+    13700002: Object001
+    13700004: Object002
+    13700006: Object003
+    13700008: Object004
+    13700010: Object005
+    13700012: Object006
+    13700014: Object007
+    13700016: Object008
+    13700018: Plane030
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bone009
+        weight: 1
+      - path: bone009/bone001
+        weight: 1
+      - path: bone009/bone002
+        weight: 1
+      - path: bone009/bone003
+        weight: 1
+      - path: bone009/bone004
+        weight: 1
+      - path: bone009/bone005
+        weight: 1
+      - path: bone009/bone006
+        weight: 1
+      - path: bone009/bone007
+        weight: 1
+      - path: bone009/bone008
+        weight: 1
+      - path: bone009/Bone011
+        weight: 1
+      - path: bone009/Plane030
+        weight: 1
+      - path: sandbag_01
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="" sceneName="Ch_PVP_01">
+    <LevelElements count="7">
+      <Element uniqueId="1" elementType="2" name="Base_us" tableId="20002501" activeWhenInitial="True" position="31,0.1,2" rotation="-0.9848078,0,0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="1" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(31.0, 0.1, 3.4)" height="0" radius="0" direction="0" size="(7.0, 6.3, 3.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(34.4, -0.4, 2.2)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(27.5, -0.4, 2.2)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="2" elementType="2" name="Base_enemy" tableId="20002502" activeWhenInitial="True" position="-31,0.1,2" rotation="0.9848078,0,0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="2" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-31.0, 0.1, 3.4)" height="0" radius="0" direction="0" size="(7.0, 6.3, 3.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(-27.6, -0.4, 2.2)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(-34.5, -0.4, 2.2)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="3" elementType="2" name="MachineGunTower" tableId="20002500" activeWhenInitial="True" position="19,0.1,-3" rotation="-0.9848078,0,0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="1" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(19.0, 0.3, -2.0)" height="0" radius="0" direction="0" size="(3.0, 3.0, 2.2)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="4" elementType="2" name="MachineGunTower" tableId="20002500" activeWhenInitial="True" position="19,0.1,8" rotation="-0.9848078,0,-0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="1" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(19.0, 0.3, 9.0)" height="0" radius="0" direction="0" size="(3.0, 3.0, 2.2)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="5" elementType="2" name="MachineGunTower" tableId="20002500" activeWhenInitial="True" position="-19,0.1,-3" rotation="0.9848078,0,0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="2" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-19.0, 0.3, -2.0)" height="0" radius="0" direction="0" size="(3.0, 3.0, 2.2)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="6" elementType="2" name="MachineGunTower" tableId="20002500" activeWhenInitial="True" position="-19,0.1,8" rotation="0.9848078,0,-0.1736481" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="2" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-19.0, 0.3, 9.0)" height="0" radius="0" direction="0" size="(3.0, 3.0, 2.2)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="7" elementType="2" name="SceneObstacle" tableId="10000000" activeWhenInitial="True" position="0,0,0" rotation="0,0,1" scale="1,1,1" isGlobal="True" isFloatInBeginning="False" Team="0" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(0.0, 1.2, 2.5)" height="0" radius="0" direction="0" size="(31.1, 4.9, 5.5)" rotation="(0.0, 0.0, 1.0)" />
+      </Element>
+    </LevelElements>
+    <PathPoints point_count="4" group_count="4" team_count="2">
+      <PathPoint uniqueId="1" group="0" position="(27.0, 0.0, 3.0)" team="1" />
+      <PathPoint uniqueId="2" group="1" position="(-27.0, 0.0, 3.0)" team="1" />
+      <PathPoint uniqueId="3" group="0" position="(-27.0, 0.0, 3.0)" team="2" />
+      <PathPoint uniqueId="4" group="1" position="(27.0, 0.0, 3.0)" team="2" />
+      <PathGroup group="0" position="(27.0, 0.0, 3.0)" team="1" />
+      <PathGroup group="1" position="(-27.0, 0.0, 3.0)" team="1" />
+      <PathGroup group="0" position="(-27.0, 0.0, 3.0)" team="2" />
+      <PathGroup group="1" position="(27.0, 0.0, 3.0)" team="2" />
+      <PathTeam team="1" tag="" />
+      <PathTeam team="2" tag="" />
+    </PathPoints>
+    <Events file="Ch_PVP_01Events" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="-0.008682251,2.5,80,25" Height="0" EditorWidth="80" EditorHeight="25" UID="-1" Mask="1025" />
+      <SubSpaces>
+        <Space RootRect="25.95012,-1.281808,0.5,1.5" Height="8" UID="1" />
+        <Space RootRect="26.45012,-0.5318079,0.5,3" Height="8" UID="1" />
+        <Space RootRect="26.95012,-1.031808,0.5,3" Height="8" UID="1" />
+        <Space RootRect="26.95012,4.718192,0.5,0.5" Height="8" UID="1" />
+        <Space RootRect="27.45012,-1.031808,0.5,3" Height="8" UID="1" />
+        <Space RootRect="27.45012,5.968192,0.5,3" Height="8" UID="1" />
+        <Space RootRect="27.95012,0.2181921,0.5,5.5" Height="8" UID="1" />
+        <Space RootRect="27.95012,5.968192,0.5,3" Height="8" UID="1" />
+        <Space RootRect="30.95012,1.968192,5.5,11" Height="8" UID="1" />
+        <Space RootRect="33.95012,-1.031808,0.5,1" Height="8" UID="1" />
+        <Space RootRect="33.95012,3.468192,0.5,6" Height="6.3" UID="1" />
+        <Space RootRect="34.45012,4.968192,0.5,3" Height="6.3" UID="1" />
+        <Space RootRect="34.95012,5.468192,0.5,2" Height="8" UID="1" />
+        <Space RootRect="-35.06507,5.816673,0.5,1.5" Height="8" UID="2" />
+        <Space RootRect="-34.56507,5.066673,0.5,3" Height="8" UID="2" />
+        <Space RootRect="-34.06507,-0.6833272,0.5,0.5" Height="8" UID="2" />
+        <Space RootRect="-34.06507,3.816673,0.5,5.5" Height="6.3" UID="2" />
+        <Space RootRect="-33.06507,1.566673,1.5,10" Height="8" UID="2" />
+        <Space RootRect="-30.31507,2.316673,4,10.5" Height="8" UID="2" />
+        <Space RootRect="-28.06507,0.5666728,0.5,6" Height="8" UID="2" />
+        <Space RootRect="-28.06507,6.066673,0.5,3" Height="8" UID="2" />
+        <Space RootRect="-27.56507,-0.9333272,0.5,3" Height="8" UID="2" />
+        <Space RootRect="-27.56507,6.066673,0.5,3" Height="8" UID="2" />
+        <Space RootRect="-27.06507,-0.9333272,0.5,3" Height="8" UID="2" />
+        <Space RootRect="-27.06507,5.066673,0.5,1" Height="8" UID="2" />
+        <Space RootRect="-26.31507,-0.6833272,1,3.5" Height="8" UID="2" />
+        <Space RootRect="17.70928,-3.522414,0.5,1.5" Height="3" UID="3" />
+        <Space RootRect="19.20928,-3.272414,2.5,3" Height="3" UID="3" />
+        <Space RootRect="17.70928,8.547046,0.5,1.5" Height="3" UID="4" />
+        <Space RootRect="19.20928,7.797046,2.5,3" Height="3" UID="4" />
+        <Space RootRect="-20.68465,-2.522414,0.5,1.5" Height="3" UID="5" />
+        <Space RootRect="-19.18465,-3.272414,2.5,3" Height="3" UID="5" />
+        <Space RootRect="-20.68465,7.547046,0.5,1.5" Height="3" UID="6" />
+        <Space RootRect="-19.18465,7.797046,2.5,3" Height="3" UID="6" />
+        <Space RootRect="-5.05,2.5,21,5.5" Height="4.9" UID="7" />
+        <Space RootRect="5.7,0,0.5,0.5" Height="4.9" UID="7" />
+        <Space RootRect="5.7,3,0.5,4.5" Height="4.9" UID="7" />
+        <Space RootRect="10.7,2.5,9.5,5.5" Height="4.9" UID="7" />
+      </SubSpaces>
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="Ch_PVP_01_path" count="0" minCameraX="-24" maxCameraX="24" minCameraZ="24" maxCameraZ="24" minCameraY="13" maxCameraY="25" />
+    <BattleLine>
+      <BattleLinePoint id="0" position="(33.7, 0.0, 0.0)" />
+      <BattleLinePoint id="100" position="(-34.6, 0.0, 0.0)" />
+      <BattleLinePoint id="999" position="(9.5, 0.0, 0.0)" />
+    </BattleLine>
+    <Slots />
+  </Map>
+</root>

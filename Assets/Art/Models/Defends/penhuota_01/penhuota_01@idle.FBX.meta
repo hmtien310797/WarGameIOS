@@ -1,0 +1,180 @@
+fileFormatVersion: 2
+guid: 927537631ca66dc4c9b9dbae2f7f6b4d
+timeCreated: 1510195323
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bone001
+    100002: bone002
+    100004: bone003
+    100006: bone004
+    100008: bone005
+    100010: bone006
+    100012: bone007
+    100014: bone008
+    100016: bone009
+    100018: bone010
+    100020: bone011
+    100022: bone012
+    100024: bone013
+    100026: Object089
+    100028: Object142
+    100030: //RootNode
+    100032: D_WP_01
+    100034: penhuota_01_a
+    100036: penhuota_01_b
+    400000: bone001
+    400002: bone002
+    400004: bone003
+    400006: bone004
+    400008: bone005
+    400010: bone006
+    400012: bone007
+    400014: bone008
+    400016: bone009
+    400018: bone010
+    400020: bone011
+    400022: bone012
+    400024: bone013
+    400026: Object089
+    400028: Object142
+    400030: //RootNode
+    400032: D_WP_01
+    400034: penhuota_01_a
+    400036: penhuota_01_b
+    4300000: Object142
+    4300002: Object089
+    4300004: penhuota_01_b
+    4300006: penhuota_01_a
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Object089
+    13700002: Object142
+    13700004: penhuota_01_a
+    13700006: penhuota_01_b
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bone013
+        weight: 1
+      - path: bone013/bone001
+        weight: 1
+      - path: bone013/bone002
+        weight: 1
+      - path: bone013/bone003
+        weight: 1
+      - path: bone013/bone004
+        weight: 1
+      - path: bone013/bone005
+        weight: 1
+      - path: bone013/bone006
+        weight: 1
+      - path: bone013/bone007
+        weight: 1
+      - path: bone013/bone008
+        weight: 1
+      - path: bone013/bone009
+        weight: 1
+      - path: bone013/bone010
+        weight: 1
+      - path: bone013/bone011
+        weight: 1
+      - path: bone013/bone012
+        weight: 1
+      - path: Object089
+        weight: 1
+      - path: Object142
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

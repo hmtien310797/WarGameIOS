@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="Ch01_Level_demo01" sceneName="Ch01_Level_guide03">
+    <LevelElements count="9">
+      <Element uniqueId="1" elementType="2" name="Base_us" tableId="90003503" activeWhenInitial="True" position="28.4,0.1,1.3" rotation="-0.955793,0,0.2940404" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="1" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(28.4, 0.1, 2.7)" height="0" radius="0" direction="0" size="(7.0, 6.3, 3.2)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(31.8, -0.4, 1.5)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(24.9, -0.4, 1.5)" height="0" radius="0" direction="0" size="(3.0, 8.0, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="2" elementType="2" name="Sandbag1" tableId="90003500" activeWhenInitial="True" position="-8.72,0.1,-1.39" rotation="0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-8.7, 0.1, -1.1)" height="0" radius="0" direction="0" size="(4.3, 0.8, 0.8)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="3" elementType="2" name="Sandbag4" tableId="90003501" activeWhenInitial="True" position="-3.2,0.1,5.3" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-3.2, 0.1, 5.6)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="4" elementType="2" name="Sandbag4" tableId="90003501" activeWhenInitial="True" position="-27.3,0.1,-2" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-27.3, 0.1, -1.7)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="5" elementType="2" name="Sandbag4" tableId="90003501" activeWhenInitial="True" position="-27.3,0.1,7" rotation="-0.9999999,0,-1.192093E-07" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="100" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-27.3, 0.1, 7.3)" height="0" radius="0" direction="0" size="(3.5, 0.8, 0.6)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="6" elementType="2" name="Meshwire" tableId="90003502" activeWhenInitial="True" position="5,0.1,-2.9" rotation="-0.7995799,0,0.6005597" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="0" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(5.0, 0.2, -2.4)" height="0" radius="0" direction="0" size="(1.0, 2.2, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="7" elementType="2" name="Meshwire" tableId="90003502" activeWhenInitial="True" position="-16.4,0.1,-4.2" rotation="0.7505727,0,0.6607879" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="0" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-16.5, 0.2, -3.7)" height="0" radius="0" direction="0" size="(1.0, 2.2, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="8" elementType="2" name="Meshwire" tableId="90003502" activeWhenInitial="True" position="-20.6,0.1,3.8" rotation="0.6586895,0,0.7524149" scale="1,1,1" isGlobal="False" isFloatInBeginning="False" Team="0" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(-20.6, 0.2, 4.3)" height="0" radius="0" direction="0" size="(1.0, 2.2, 1.0)" rotation="(0.0, 1.0, 0.0)" />
+      </Element>
+      <Element uniqueId="9" elementType="2" name="SceneObstacle" tableId="10000000" activeWhenInitial="True" position="0,0,0" rotation="0,0,1" scale="1,1,1" isGlobal="True" isFloatInBeginning="False" Team="0" linkedElementsUID="">
+        <Collide Type="UnityEngine.BoxCollider" center="(12.9, 0.5, 2.2)" height="0" radius="0" direction="0" size="(3.6, 2.1, 2.3)" rotation="(-0.1, 0.0, 1.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(10.0, 0.5, 2.3)" height="0" radius="0" direction="0" size="(3.6, 3.0, 3.3)" rotation="(-0.1, 0.0, 1.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(1.6, 0.5, 7.6)" height="0" radius="0" direction="0" size="(2.9, 2.5, 3.0)" rotation="(0.2, 0.0, 1.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(3.7, 0.5, 6.6)" height="0" radius="0" direction="0" size="(1.9, 2.0, 1.7)" rotation="(0.2, 0.0, 1.0)" />
+        <Collide Type="UnityEngine.BoxCollider" center="(-0.2, 0.3, 7.6)" height="0" radius="0" direction="0" size="(1.4, 1.5, 1.3)" rotation="(0.2, 0.0, 1.0)" />
+      </Element>
+    </LevelElements>
+    <PathPoints point_count="18" group_count="6" team_count="2">
+      <PathPoint uniqueId="1" group="0" position="(4.5, 0.0, -0.5)" team="1" />
+      <PathPoint uniqueId="2" group="0" position="(5.1, 0.0, 4.8)" team="1" />
+      <PathPoint uniqueId="3" group="0" position="(2.9, 0.0, 2.6)" team="1" />
+      <PathPoint uniqueId="4" group="1" position="(-12.7, 0.0, -2.3)" team="1" />
+      <PathPoint uniqueId="5" group="1" position="(-11.0, 0.0, 1.6)" team="1" />
+      <PathPoint uniqueId="6" group="1" position="(-9.3, 0.0, 6.4)" team="1" />
+      <PathPoint uniqueId="7" group="2" position="(-30.5, 0.0, -2.5)" team="1" />
+      <PathPoint uniqueId="8" group="2" position="(-25.2, 0.0, 0.9)" team="1" />
+      <PathPoint uniqueId="9" group="2" position="(-26.2, 0.0, 5.9)" team="1" />
+      <PathPoint uniqueId="10" group="0" position="(-16.1, 0.0, -0.5)" team="2" />
+      <PathPoint uniqueId="11" group="0" position="(-14.9, 0.0, 2.7)" team="2" />
+      <PathPoint uniqueId="12" group="0" position="(-18.9, 0.0, 2.1)" team="2" />
+      <PathPoint uniqueId="13" group="1" position="(3.0, 0.0, 1.6)" team="2" />
+      <PathPoint uniqueId="14" group="1" position="(5.2, 0.0, 3.9)" team="2" />
+      <PathPoint uniqueId="15" group="1" position="(6.1, 0.0, -1.5)" team="2" />
+      <PathPoint uniqueId="16" group="2" position="(21.3, 0.0, -0.9)" team="2" />
+      <PathPoint uniqueId="17" group="2" position="(22.6, 0.0, 1.9)" team="2" />
+      <PathPoint uniqueId="18" group="2" position="(23.4, 0.0, 3.6)" team="2" />
+      <PathGroup group="0" position="(19.7, 0.0, 1.1)" team="1" />
+      <PathGroup group="1" position="(-10.2, 0.0, 1.6)" team="1" />
+      <PathGroup group="2" position="(-25.2, 0.0, 1.4)" team="1" />
+      <PathGroup group="0" position="(-19.5, 0.0, 0.9)" team="2" />
+      <PathGroup group="1" position="(5.2, 0.0, 1.1)" team="2" />
+      <PathGroup group="2" position="(22.6, 0.0, 1.4)" team="2" />
+      <PathTeam team="1" tag="" />
+      <PathTeam team="2" tag="" />
+    </PathPoints>
+    <Events file="Ch01_Level_guide03Events" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="2.743036,1.977534,95,35" Height="0" EditorWidth="95" EditorHeight="35" UID="-1" Mask="1025" />
+      <SubSpaces>
+        <Space RootRect="22.87873,-1.758106,0.5,0.5" Height="8" UID="1" />
+        <Space RootRect="24.12873,-1.258106,2,3.5" Height="8" UID="1" />
+        <Space RootRect="24.87873,4.741894,0.5,0.5" Height="8" UID="1" />
+        <Space RootRect="25.37873,-0.5081062,0.5,5" Height="8" UID="1" />
+        <Space RootRect="25.37873,5.491894,0.5,3" Height="8" UID="1" />
+        <Space RootRect="28.12873,1.241894,5,11.5" Height="8" UID="1" />
+        <Space RootRect="30.87873,1.491894,0.5,8" Height="8" UID="1" />
+        <Space RootRect="31.37873,2.991894,0.5,5" Height="6.3" UID="1" />
+        <Space RootRect="32.12873,3.741894,1,3.5" Height="6.3" UID="1" />
+        <Space RootRect="32.87873,4.491894,0.5,1" Height="8" UID="1" />
+        <Space RootRect="-8.870001,-1.539999,0.5,4" Height="0.8" UID="2" />
+        <Space RootRect="-3.35,5.050001,0.5,3" Height="0.8" UID="3" />
+        <Space RootRect="-27.45,-2.25,0.5,3" Height="0.8" UID="4" />
+        <Space RootRect="-27.45,7,0.5,3.5" Height="0.8" UID="5" />
+        <Space RootRect="4.483064,-2.593172,1,1" Height="2.188043" UID="6" />
+        <Space RootRect="5.233064,-3.093172,0.5,1" Height="2.188043" UID="6" />
+        <Space RootRect="5.733064,-3.593172,0.5,1" Height="2.188043" UID="6" />
+        <Space RootRect="-17.21719,-4.65017,1,1.5" Height="2.188043" UID="7" />
+        <Space RootRect="-16.21719,-4.15017,1,1.5" Height="2.188043" UID="7" />
+        <Space RootRect="-21.34463,3.272075,1,1.5" Height="2.188043" UID="8" />
+        <Space RootRect="-20.34463,3.772075,1,1.5" Height="2.188043" UID="8" />
+        <Space RootRect="-0.5138822,7.729082,1,1.5" Height="1.5" UID="9" />
+        <Space RootRect="0.2361178,7.229082,0.5,1.5" Height="2.5" UID="9" />
+        <Space RootRect="1.736118,7.479082,2.5,3" Height="2.5" UID="9" />
+        <Space RootRect="3.236118,6.729082,0.5,1.5" Height="2" UID="9" />
+        <Space RootRect="3.236118,8.729082,0.5,0.5" Height="2.5" UID="9" />
+        <Space RootRect="3.986118,6.479082,1,2" Height="2" UID="9" />
+        <Space RootRect="4.736118,7.229082,0.5,0.5" Height="2" UID="9" />
+        <Space RootRect="8.236118,2.979082,0.5,2" Height="3" UID="9" />
+        <Space RootRect="11.48612,2.229082,6,3.5" Height="3" UID="9" />
+      </SubSpaces>
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="Ch01_Level_guide03_path" count="0" minCameraX="-23" maxCameraX="21" minCameraZ="24" maxCameraZ="24" minCameraY="13" maxCameraY="25" />
+    <BattleLine>
+      <BattleLinePoint id="0" position="(31.0, 0.0, 0.3)" />
+      <BattleLinePoint id="100" position="(-40.6, 0.0, 1.1)" />
+      <BattleLinePoint id="999" position="(12.8, 0.0, 1.8)" />
+    </BattleLine>
+    <Slots>
+      <Slot UID="2">
+        <Node Pos="(-9.7, 0.1, 0.1)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-9.7, 0.1, -2.9)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-7.7, 0.1, -2.9)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-7.7, 0.1, 0.1)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-9.7, 0.1, -0.9)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-9.7, 0.1, -1.9)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-7.7, 0.1, -1.9)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-7.7, 0.1, -0.9)" Forward="(-1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="3">
+        <Node Pos="(-2.2, 0.1, 4.3)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-2.2, 0.1, 6.8)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-2.2, 0.1, 5.3)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-4.2, 0.1, 6.8)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-4.2, 0.1, 4.3)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-4.2, 0.1, 5.3)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="4">
+        <Node Pos="(-26.3, 0.1, -3.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-26.3, 0.1, -0.5)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-26.3, 0.1, -2.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, -0.5)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, -3.0)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, -2.0)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+      <Slot UID="5">
+        <Node Pos="(-26.3, 0.1, 6.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-26.3, 0.1, 8.5)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-26.3, 0.1, 7.0)" Forward="(-1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, 8.5)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, 6.0)" Forward="(1.0, 0.0, 0.0)" />
+        <Node Pos="(-28.3, 0.1, 7.0)" Forward="(1.0, 0.0, 0.0)" />
+      </Slot>
+    </Slots>
+  </Map>
+</root>

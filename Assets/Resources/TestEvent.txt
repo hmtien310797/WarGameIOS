@@ -1,0 +1,1 @@
+[{"ProductionId":2,"Pos":{"x":7.49850463867188,"y":0.0,"z":5.59529542922974},"Dir":{"x":0.0,"y":0.0,"z":1.0},"NextEventIDs":[],"Enabled":true,"Name":"New Game Object","TypeID":1,"id":0}]

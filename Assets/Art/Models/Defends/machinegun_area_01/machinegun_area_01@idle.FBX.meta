@@ -1,0 +1,278 @@
+fileFormatVersion: 2
+guid: af1c8cbbb07442640b11e9f3f0feb862
+timeCreated: 1508325179
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: bone001
+    100004: Bone002
+    100006: bone002
+    100008: Bone003
+    100010: bone003
+    100012: Bone004
+    100014: Bone005
+    100016: bone005
+    100018: Bone006
+    100020: bone006
+    100022: Bone007
+    100024: bone007
+    100026: bone008
+    100028: bone009
+    100030: bone010
+    100032: bone011
+    100034: bone012
+    100036: bone013
+    100038: bone014
+    100040: bone015
+    100042: bone016
+    100044: bone017
+    100046: bone018
+    100048: bone019
+    100050: bone020
+    100052: bone021
+    100054: bone022
+    100056: bone023
+    100058: bone024
+    100060: bone025
+    100062: bone026
+    100064: bone027
+    100066: bone028
+    100068: bone029
+    100070: bone030
+    100072: bone031
+    100074: bone032
+    100076: bone033
+    100078: bone037
+    100080: //RootNode
+    100082: machinegun_area_01_a
+    100084: machinegun_area_01_b
+    400000: Bone001
+    400002: bone001
+    400004: Bone002
+    400006: bone002
+    400008: Bone003
+    400010: bone003
+    400012: Bone004
+    400014: Bone005
+    400016: bone005
+    400018: Bone006
+    400020: bone006
+    400022: Bone007
+    400024: bone007
+    400026: bone008
+    400028: bone009
+    400030: bone010
+    400032: bone011
+    400034: bone012
+    400036: bone013
+    400038: bone014
+    400040: bone015
+    400042: bone016
+    400044: bone017
+    400046: bone018
+    400048: bone019
+    400050: bone020
+    400052: bone021
+    400054: bone022
+    400056: bone023
+    400058: bone024
+    400060: bone025
+    400062: bone026
+    400064: bone027
+    400066: bone028
+    400068: bone029
+    400070: bone030
+    400072: bone031
+    400074: bone032
+    400076: bone033
+    400078: bone037
+    400080: //RootNode
+    400082: machinegun_area_01_a
+    400084: machinegun_area_01_b
+    4300000: machinegun_area_01_a
+    4300002: machinegun_area_01_b
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: machinegun_area_01_a
+    13700002: machinegun_area_01_b
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bone037
+        weight: 1
+      - path: bone037/bone001
+        weight: 1
+      - path: bone037/bone002
+        weight: 1
+      - path: bone037/bone003
+        weight: 1
+      - path: bone037/bone005
+        weight: 1
+      - path: bone037/bone006
+        weight: 1
+      - path: bone037/bone007
+        weight: 1
+      - path: bone037/bone008
+        weight: 1
+      - path: bone037/bone009
+        weight: 1
+      - path: bone037/bone009/Bone001
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002/Bone003
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002/Bone003/Bone004
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002/Bone003/Bone004/Bone005
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002/Bone003/Bone004/Bone005/Bone006
+        weight: 1
+      - path: bone037/bone009/Bone001/Bone002/Bone003/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: bone037/bone010
+        weight: 1
+      - path: bone037/bone011
+        weight: 1
+      - path: bone037/bone012
+        weight: 1
+      - path: bone037/bone013
+        weight: 1
+      - path: bone037/bone014
+        weight: 1
+      - path: bone037/bone015
+        weight: 1
+      - path: bone037/bone016
+        weight: 1
+      - path: bone037/bone017
+        weight: 1
+      - path: bone037/bone018
+        weight: 1
+      - path: bone037/bone019
+        weight: 1
+      - path: bone037/bone020
+        weight: 1
+      - path: bone037/bone021
+        weight: 1
+      - path: bone037/bone022
+        weight: 1
+      - path: bone037/bone023
+        weight: 1
+      - path: bone037/bone024
+        weight: 1
+      - path: bone037/bone025
+        weight: 1
+      - path: bone037/bone026
+        weight: 1
+      - path: bone037/bone027
+        weight: 1
+      - path: bone037/bone028
+        weight: 1
+      - path: bone037/bone029
+        weight: 1
+      - path: bone037/bone030
+        weight: 1
+      - path: bone037/bone031
+        weight: 1
+      - path: bone037/bone032
+        weight: 1
+      - path: bone037/bone033
+        weight: 1
+      - path: machinegun_area_01_a
+        weight: 1
+      - path: machinegun_area_01_b
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

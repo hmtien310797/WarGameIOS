@@ -1,0 +1,260 @@
+fileFormatVersion: 2
+guid: 861a6256f7e7493419f22dfecfded305
+timeCreated: 1482992861
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone001
+    100002: Bone001(mirrored)
+    100004: Bone002
+    100006: Bone002(mirrored)
+    100008: Bone003
+    100010: Bone003(mirrored)
+    100012: Bone004
+    100014: Bone004(mirrored)
+    100016: Bone005
+    100018: Bone005(mirrored)
+    100020: Bone006
+    100022: Bone006(mirrored)
+    100024: Bone007
+    100026: Bone007(mirrored)
+    100028: Bone008
+    100030: Bone009
+    100032: Bone010
+    100034: Bone011
+    100036: Bone012
+    100038: Bone013
+    100040: Circle001
+    100042: IK Chain001
+    100044: IK Chain002
+    100046: IK Chain003
+    100048: IK Chain004
+    100050: IK Chain005
+    100052: IK Chain006
+    100054: Object002
+    100056: Point001
+    100058: train_01
+    100060: //RootNode
+    100062: Train_01_bone
+    100064: Point002
+    100066: Point003
+    100068: Point004
+    100070: Point005
+    100072: Point006
+    100074: Point007
+    100076: Point008
+    400000: Bone001
+    400002: Bone001(mirrored)
+    400004: Bone002
+    400006: Bone002(mirrored)
+    400008: Bone003
+    400010: Bone003(mirrored)
+    400012: Bone004
+    400014: Bone004(mirrored)
+    400016: Bone005
+    400018: Bone005(mirrored)
+    400020: Bone006
+    400022: Bone006(mirrored)
+    400024: Bone007
+    400026: Bone007(mirrored)
+    400028: Bone008
+    400030: Bone009
+    400032: Bone010
+    400034: Bone011
+    400036: Bone012
+    400038: Bone013
+    400040: Circle001
+    400042: IK Chain001
+    400044: IK Chain002
+    400046: IK Chain003
+    400048: IK Chain004
+    400050: IK Chain005
+    400052: IK Chain006
+    400054: Object002
+    400056: Point001
+    400058: train_01
+    400060: //RootNode
+    400062: Train_01_bone
+    400064: Point002
+    400066: Point003
+    400068: Point004
+    400070: Point005
+    400072: Point006
+    400074: Point007
+    400076: Point008
+    4300000: train_01
+    7400000: idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: train_01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 120
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Circle001
+        weight: 1
+      - path: Object002
+        weight: 1
+      - path: Point002
+        weight: 1
+      - path: Point003
+        weight: 1
+      - path: Point004
+        weight: 1
+      - path: Point005
+        weight: 1
+      - path: Point006
+        weight: 1
+      - path: Point007
+        weight: 1
+      - path: Point008
+        weight: 1
+      - path: train_01
+        weight: 1
+      - path: Train_01_bone
+        weight: 1
+      - path: Train_01_bone/Bone001
+        weight: 1
+      - path: Train_01_bone/Bone001/IK Chain003
+        weight: 1
+      - path: Train_01_bone/Bone001(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone001(mirrored)/IK Chain006
+        weight: 1
+      - path: Train_01_bone/Bone002
+        weight: 1
+      - path: Train_01_bone/Bone002/Bone007
+        weight: 1
+      - path: Train_01_bone/Bone002/Bone007/Bone010
+        weight: 1
+      - path: Train_01_bone/Bone002/IK Chain002
+        weight: 1
+      - path: Train_01_bone/Bone002(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone002(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone002(mirrored)/Bone007(mirrored)/Bone011
+        weight: 1
+      - path: Train_01_bone/Bone002(mirrored)/IK Chain005
+        weight: 1
+      - path: Train_01_bone/Bone003
+        weight: 1
+      - path: Train_01_bone/Bone003/Bone006
+        weight: 1
+      - path: Train_01_bone/Bone003/Bone006/Bone009
+        weight: 1
+      - path: Train_01_bone/Bone003/IK Chain001
+        weight: 1
+      - path: Train_01_bone/Bone003(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone003(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone003(mirrored)/Bone006(mirrored)/Bone012
+        weight: 1
+      - path: Train_01_bone/Bone003(mirrored)/IK Chain004
+        weight: 1
+      - path: Train_01_bone/Bone004
+        weight: 1
+      - path: Train_01_bone/Bone004/Bone005
+        weight: 1
+      - path: Train_01_bone/Bone004/Bone005/Bone008
+        weight: 1
+      - path: Train_01_bone/Bone004(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Train_01_bone/Bone004(mirrored)/Bone005(mirrored)/Bone013
+        weight: 1
+      - path: Train_01_bone/Point001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

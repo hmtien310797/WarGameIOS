@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Map levelName="" sceneName="Ch01_Level_demo09">
+    <LevelElements count="0" />
+    <PathPoints point_count="0" group_count="0" team_count="0" />
+    <Events file="Ch01_Level_demo09Events" />
+    <LevelQuadSpace>
+      <RootSpace RootRect="0,0,0,0" Height="0" UID="-1" Mask="0" />
+      <SubSpaces />
+    </LevelQuadSpace>
+    <Scene name="sceneName" AStar="Ch01_Level_demo09_path" count="0" minCameraX="-26" maxCameraX="40" minCameraZ="34" maxCameraZ="34" minCameraY="13" maxCameraY="35" />
+    <BattleLine />
+    <Slots />
+  </Map>
+</root>
